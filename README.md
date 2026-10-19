@@ -15,11 +15,11 @@ Please contact the following people for any assistance with the church's codebas
 
 ### Gabriel Shirey
 
-**Position**: Encounter Ministries Media Technician
-**Email**: gabrieldaneshirey@gmail.com
+**Position**: Encounter Ministries Media Technician  
+**Email**: gabrieldainshirey@gmail.com  
 
 ### Joshua Chadwick
 
-**Position**: Encounter Ministries Media Technician
-**Email**: jchadwick423@gmail.com
+**Position**: Encounter Ministries Media Technician  
+**Email**: jchadwick423@gmail.com  
 
