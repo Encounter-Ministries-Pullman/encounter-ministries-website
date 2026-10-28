@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Encounter Ministries | A church family in Pullman, Washington</title>
+<meta name="description" content="Encounter Ministries is a non-denominational, Spirit-filled church at 645 N Grand in Pullman, WA. Sundays at 10:00 AM.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--sky:#c8d8d3;--skyl:#eaf0ee;--wheat:#e3a857;--green:#3f7a5a;--pea:#1f4a38;--earth:#12261f;--ink:#14231d;--muted:#52625b;--barn:#e3a857;--slate:#4a6572;
+--head:"Outfit",system-ui,sans-serif;--body:"Inter",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font:1.05rem/1.7 var(--body);color:var(--ink);background:#fff;overflow-x:hidden}
+h1,h2,h3{font-family:var(--head);font-weight:600;line-height:1.1;letter-spacing:-.02em}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--wheat);outline-offset:3px}
+.wrap{max-width:1060px;margin:0 auto;padding:0 1.5rem;position:relative}
+section{position:relative;padding:5.5rem 0}
+h2{font-size:clamp(1.9rem,4vw,2.7rem);margin-bottom:1rem}
+.lead{max-width:58ch;color:var(--muted)}
+.btn{display:inline-block;font:600 1rem var(--body);padding:.8rem 1.5rem;border-radius:999px;text-decoration:none;background:var(--wheat);color:var(--earth);border:2px solid var(--wheat);cursor:pointer}
+.btn.dark{background:var(--pea);border-color:var(--pea);color:#fff}
+.btn.ghost{background:transparent;color:inherit;border-color:currentColor}
+.btn:hover{filter:brightness(1.1)}
+.btns{display:flex;gap:.8rem;flex-wrap:wrap}
+.hill::before{display:none}
+
+.bar{background:var(--earth);color:#cfe0d8;font-size:.9rem;text-align:center;padding:.5rem 1rem}
+.bar a{color:var(--wheat);font-weight:600}
+header{position:absolute;inset:0 0 auto;z-index:5}
+nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;padding:1.1rem 0}
+.logo{font:600 1.4rem var(--head);color:var(--earth);text-decoration:none;letter-spacing:-.02em}
+nav ul{display:flex;gap:1.3rem;list-style:none;padding:0;flex-wrap:wrap;align-items:center}
+nav ul a{text-decoration:none;font-weight:500;font-size:.95rem;color:var(--pea)}
+nav ul a:hover{color:var(--green)}
+nav .btn{padding:.5rem 1.1rem;color:#fff}
+
+/* hero: misty ridges and evergreen treeline */
+.hero{position:relative;overflow:hidden;min-height:0;padding:8.5rem 0 0;color:var(--earth);background:linear-gradient(180deg,#d6e4e0 0,#eef4f2 55%,#dbe6e2 100%)}
+.hero .wrap{z-index:2;padding-bottom:250px}
+.hero h1{font-size:clamp(2.6rem,7.2vw,5.2rem);font-weight:600}
+.hero p{max-width:44ch;margin:1.3rem 0 1.8rem;font-size:1.2rem;color:#2f4a3f}
+.hero.short{min-height:0}
+.hero.short h1{font-size:clamp(2.6rem,7vw,4.6rem)}
+#scene{position:absolute;inset:auto 0 0;width:100%;height:360px;z-index:1;display:block}
+#scene>*{animation:rise 1.4s ease-out both}
+#scene>*:nth-child(3){animation-delay:.1s}#scene>*:nth-child(4){animation-delay:.2s}#scene>*:nth-child(5){animation-delay:.3s}#scene>*:nth-child(6){animation-delay:.4s}
+@keyframes rise{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+
+.week{background:#fff}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem;margin-top:2rem}
+.card{display:flex;flex-direction:column;justify-content:space-between;min-height:230px;padding:1.6rem;border-radius:16px;text-decoration:none;background:var(--earth);color:#fff}
+.card:nth-child(2){background:var(--pea)}.card:nth-child(3){background:var(--wheat);color:var(--earth)}
+.card small{font-weight:600;opacity:.8}
+.card h3{font-size:1.5rem;margin:.4rem 0 .8rem}
+.card span{font-weight:600;border-bottom:2px solid currentColor;align-self:flex-start}
+.card:hover{transform:translateY(-3px)}
+
+.visit{background:var(--earth);color:#fff}
+.visit .cols{display:grid;grid-template-columns:1fr 1.2fr;gap:3rem;align-items:start}
+.visit .lead{color:#b9cfc6}
+.visit address{font-style:normal;margin:1rem 0 1.4rem;font-size:1.15rem}
+.times{list-style:none;padding:0;display:grid;gap:.6rem}
+.times li{display:flex;justify-content:space-between;gap:1rem;padding:1rem 1.2rem;border-radius:12px;background:#1c3a2e}
+.times li:first-child{background:var(--wheat);color:var(--earth)}
+.times b{font:600 1.15rem var(--head)}
+.times span{text-align:right;font-size:.95rem}
+
+.steps{background:#fff}
+.step{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.4rem .2rem;border-top:1px solid #d3deda;text-decoration:none}
+.step:last-child{border-bottom:1px solid #d3deda}
+.step small{display:block;color:var(--muted);font-size:.92rem}
+.step b{font:600 clamp(1.4rem,3vw,2rem) var(--head);letter-spacing:-.02em}
+.step i{flex:none;width:2.6rem;height:2.6rem;border-radius:50%;background:var(--skyl);color:var(--pea);display:grid;place-items:center;font-style:normal;font-weight:700}
+.step:hover i{background:var(--pea);color:#fff}
+
+.mins{background:var(--skyl)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;margin-top:2rem}
+.min{padding:1.6rem;border-radius:14px;background:#fff;border-top:4px solid var(--green);min-height:150px}
+.min:nth-child(2){border-top-color:var(--slate)}.min:nth-child(3){border-top-color:var(--wheat)}.min:nth-child(4){border-top-color:var(--pea)}.min:nth-child(5){border-top-color:var(--green)}.min:nth-child(6){border-top-color:var(--slate)}
+.min h3{font-size:1.25rem;margin-bottom:.4rem}
+.min p{font-size:1rem;color:var(--muted)}
+
+.pastor{background:#fff}
+.pastor .cols{display:grid;grid-template-columns:340px 1fr;gap:3rem;align-items:center}
+.pastor img{width:100%;border-radius:18px;display:block;aspect-ratio:1/1;object-fit:cover;background:#d3deda}
+.mission{font:600 clamp(1.4rem,3vw,1.9rem)/1.25 var(--head);color:var(--pea);margin-bottom:1.2rem;letter-spacing:-.02em}
+.contact{margin-top:1.4rem;display:grid;gap:.2rem;font-weight:500}
+.contact a{text-decoration:none;color:var(--green)}
+
+.prayer{background:#fff}
+.prayer .cols{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem}
+form{display:grid;gap:1rem}
+label{font-weight:600;font-size:.95rem}
+input,textarea{width:100%;font:1rem var(--body);padding:.75rem;margin-top:.3rem;border:1px solid #b6c6bf;border-radius:10px;background:#fff}
+.check{display:flex;gap:.6rem;align-items:center;font-weight:500}
+.check input{width:auto;margin:0}
+form .btn{justify-self:start}
+
+.give{background:var(--earth);color:#fff;text-align:center}
+.give h2{font-size:clamp(2.2rem,5.5vw,3.6rem)}
+.give p{max-width:52ch;margin:0 auto 1.8rem;color:#b9cfc6}
+
+footer{background:#0b1a14;color:#9db5aa;padding:2.5rem 0;font-size:.95rem}
+footer .wrap{display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+footer a{margin-right:1rem;color:#d7e6df}
+
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.6rem}
+.opts label{display:flex;gap:.6rem;align-items:center;font-weight:500;padding:.7rem .9rem;border:1px solid #b6c6bf;border-radius:10px;background:#fff;cursor:pointer}
+.opts input{width:auto;margin:0}
+fieldset{border:0;padding:0}
+legend{font-weight:600;font-size:.95rem;margin-bottom:.5rem}
+.formbox{max-width:760px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+@media(max-width:820px){
+section{padding:3.5rem 0}header{position:relative;inset:auto;background:#d6e4e0}.hero{padding-top:1.5rem}
+.visit .cols,.pastor .cols,.prayer .cols,.row2{grid-template-columns:1fr;gap:2rem}
+.row2{gap:1rem}.pastor img{max-width:320px}
+}
+@media(prefers-reduced-motion:reduce){#scene>*{animation:none}html{scroll-behavior:auto}.card:hover{transform:none}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><nav aria-label="Main">
+  <a class="logo" href="#top">Encounter Ministries</a>
+  <ul>
+    <li><a href="#week">Watch</a></li>
+    <li><a href="#ministries">Ministries</a></li>
+    <li><a href="connect.html">Connect</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="#give">Give</a></li>
+  </ul>
+</nav></div></header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <h1>A church family<br>for the Palouse.</h1>
+    <p>Come Encounter God together with us.</p>
+    <div class="btns">
+      <a class="btn dark" href="#week">Watch online</a>
+    </div>
+  </div>
+  <svg id="scene" preserveAspectRatio="none" aria-hidden="true"></svg>
+</section>
+
+<section class="visit hill" id="visit">
+  <div class="wrap cols">
+    <div>
+      <h2>Visit us in Pullman</h2>
+      <p class="lead">Everyone is welcome, whatever your background or where you are in your faith.</p>
+      <address>645 N Grand<br>Pullman, WA</address>
+      <div class="btns">
+        <a class="btn" href="https://maps.google.com/?q=645+N+Grand+Pullman+WA" target="_blank" rel="noopener">Get directions</a>
+        <a class="btn ghost" href="tel:+15097151500">Call 509-715-1500</a>
+      </div>
+    </div>
+    <ul class="times">
+      <li><b>Sunday, 10:00 AM</b><span>Worship service</span></li>
+      <li><b>Monday, 6:00 AM</b><span>Men's prayer meeting</span></li>
+      <li><b>Monday, 6:00 PM</b><span>Corporate intercession</span></li>
+      <li><b>Wednesday, 6 to 8 PM</b><span>Food at 6, teaching after</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="week hill" id="week">
+  <div class="wrap">
+    <h2>This week at Encounter</h2>
+    <p class="lead">Can't make it in person? Join a service online or catch up on the latest message.</p>
+    <!-- To show real video thumbnails or an embedded player, see the YouTube uploads playlist note in the README or ask for the embed version. -->
+    <div class="cards">
+      <a class="card" href="https://www.youtube.com/channel/UCECIy1zJmZWYAqKruTIBB-w/videos" target="_blank" rel="noopener"><div><small>Sermons</small><h3>Watch the latest message</h3></div><span>Open YouTube</span></a>
+      <a class="card" href="https://www.facebook.com/EMPalouse/" target="_blank" rel="noopener"><div><small>Online services</small><h3>Join us live on Facebook</h3></div><span>Watch live</span></a>
+      <a class="card" href="#prayer"><div><small>Prayer</small><h3>Share a need with our team</h3></div><span>Request prayer</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="mins hill" id="ministries">
+  <div class="wrap">
+    <h2>For every season</h2>
+    <p class="lead">Ministries for every stage of life, each with its own leaders. Dedicated pages are coming soon.</p>
+    <!-- Edit these to match your real ministries and link each to its own page -->
+    <div class="grid">
+      <div class="min"><h3>Encounter Youth</h3><p>A place for teens to grow in faith and friendship.</p></div>
+      <div class="min"><h3>Encounter Students</h3><p>Community for WSU and UI students.</p></div>
+      <div class="min"><h3>Encounter WMN</h3><p>Women encouraging one another in faith.</p></div>
+      <div class="min"><h3>Encounter Singles</h3><p>Friendship and faith for single adults.</p></div>
+      <div class="min"><h3>Encounter Men</h3><p>Fellowship and discipleship for men.</p></div>
+      <div class="min"><h3>Encounter Marriages</h3><p>Support and encouragement for married couples.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="prayer hill" id="prayer">
+  <div class="wrap cols">
+    <div>
+      <h2>How can we pray for you?</h2>
+      <p class="lead">Share a need and our prayer team will lift it up. You can keep it private.</p>
+    </div>
+    <form action="prayer.php" method="post">
+      <p id="formmsg" role="status" style="font-weight:700;color:var(--pea)"></p>
+      <div style="position:absolute;left:-9999px" aria-hidden="true">
+        <label>Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label>
+      </div>
+      <label>Name (optional)<input name="name" autocomplete="name"></label>
+      <label>Email (optional)<input type="email" name="email" autocomplete="email"></label>
+      <label>Your request<textarea name="request" rows="4" required></textarea></label>
+      <label class="check"><input type="checkbox" name="private" value="yes" checked> Keep this private to the prayer team</label>
+      <button class="btn dark" type="submit">Send prayer request</button>
+    </form>
+  </div>
+</section>
+
+<section class="give hill" id="give">
+  <div class="wrap">
+    <h2>Bring your first and best.</h2>
+    <p>Your generosity supports our ministry efforts on the Palouse and so much more.</p>
+    <a class="btn" href="https://www.easytithe.com/encounterpullman" target="_blank" rel="noopener">Give securely online</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>Encounter Ministries<br>645 N Grand, Pullman, WA &nbsp;|&nbsp; 509-715-1500</div>
+    <div>
+      <a href="https://www.facebook.com/EMPalouse/" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.youtube.com/channel/UCECIy1zJmZWYAqKruTIBB-w/videos" target="_blank" rel="noopener">YouTube</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Misty ridges and evergreen treeline, drawn at the real screen width so nothing stretches on wide monitors.
+(function(){
+  var svg=document.getElementById('scene'),ns='http://www.w3.org/2000/svg',H=360,seed,timer;
+  function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647}
+  function el(name,attrs,parent){var e=document.createElementNS(ns,name);for(var k in attrs)e.setAttribute(k,attrs[k]);(parent||svg).appendChild(e);return e}
+  function ridge(xs,ys,W,color){
+    var d='M0 '+H;
+    for(var i=0;i<xs.length;i++)d+=(i?'L':'L')+(xs[i]/1440*W).toFixed(1)+' '+ys[i];
+    el('path',{d:d+'L'+W+' '+H+'Z',fill:color});
+  }
+  function layer(W,base,minH,maxH,step,color){
+    var d='',x=-20;
+    while(x<W+40){
+      var h=minH+rnd()*(maxH-minH),w=h*0.46;
+      for(var k=0;k<3;k++){
+        var apex=base-h+k*h*0.26,bot=apex+h*0.44,hw=w*(0.3+0.2*k);
+        d+='M'+x.toFixed(1)+' '+apex.toFixed(1)+'L'+(x+hw).toFixed(1)+' '+bot.toFixed(1)+'L'+(x-hw).toFixed(1)+' '+bot.toFixed(1)+'Z';
+      }
+      x+=step*(0.7+rnd()*0.6);
+    }
+    d+='M0 '+(base-minH*0.1)+'H'+W+'V'+H+'H0Z';
+    el('path',{d:d,fill:color});
+  }
+  function draw(){
+    var W=Math.round(svg.getBoundingClientRect().width)||1440;
+    seed=7;
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+    svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    var defs=el('defs',{}),g=el('linearGradient',{id:'mist',x1:0,y1:0,x2:0,y2:1},defs);
+    el('stop',{offset:0,'stop-color':'#fff','stop-opacity':0},g);
+    el('stop',{offset:.5,'stop-color':'#fff','stop-opacity':.55},g);
+    el('stop',{offset:1,'stop-color':'#fff','stop-opacity':0},g);
+    var xs=[0,110,210,360,500,650,810,970,1120,1290,1440];
+    ridge(xs,[130,70,110,10,90,40,110,20,100,50,95],W,'#b7cbc5');
+    ridge(xs,[180,130,165,90,160,120,170,105,160,125,150],W,'#8fada5');
+    el('rect',{y:120,width:W,height:110,fill:'url(#mist)'});
+    layer(W,215,60,95,22,'#5f8a79');
+    layer(W,270,85,135,30,'#2f5c49');
+    layer(W,350,120,190,40,'#12261f');
+  }
+  draw();
+  window.addEventListener('resize',function(){clearTimeout(timer);timer=setTimeout(draw,150)});
+})();
+</script>
+
+<script>
+var q=new URLSearchParams(location.search),msg=document.getElementById('formmsg');
+if(msg&&q.has('sent'))msg.textContent='Thank you. Your request has been sent to our prayer team.';
+else if(msg&&q.has('error')){msg.textContent='Something went wrong. Please try again, or call 509-715-1500.';msg.style.color='#a33';}
+</script>
+</body>
+</html>
