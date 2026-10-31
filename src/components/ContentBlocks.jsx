@@ -1,7 +1,36 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { BUTTON_CLASSES, CONTAINER_CLASSES, ENCOUNTER_COLORS } from '../constants.tsx';
 
 const LANDSCAPE_HEIGHT = 360;
+const HERO_CONTENT_CLASSES = 'relative mx-auto z-[2] w-[calc(100%-3rem)] max-w-265 pb-[250px] max-[820px]:w-[calc(100%-2rem)] max-[820px]:pb-[190px]';
+const HERO_CLASSES = {
+  full: 'relative min-h-[490px] overflow-hidden bg-[linear-gradient(180deg,var(--color-background-soft)_0,var(--color-background-subtle)_55%,var(--color-background)_100%)] pt-[8.5rem] text-brand max-[820px]:min-h-[400px] max-[820px]:pt-8',
+  short: 'relative min-h-0 overflow-hidden bg-[linear-gradient(180deg,var(--color-background-soft)_0,var(--color-background-subtle)_55%,var(--color-background)_100%)] pt-[8.5rem] text-brand max-[820px]:min-h-[400px] max-[820px]:pt-8',
+};
+const MINISTRY_CARD_CLASSES = [
+  'min-h-[150px] rounded bg-paper border-t-4 border-sea p-6',
+  'min-h-[150px] rounded bg-paper border-t-4 border-brand p-6',
+  'min-h-[150px] rounded bg-paper border-t-4 border-highlight p-6',
+];
+const LINK_CARD_CLASSES = [
+  'flex min-h-[230px] flex-col justify-between rounded-lg bg-brand p-[1.6rem] text-paper no-underline transition-transform duration-200 hover:-translate-y-[3px]',
+  'flex min-h-[230px] flex-col justify-between rounded-lg bg-brand-soft p-[1.6rem] text-paper no-underline transition-transform duration-200 hover:-translate-y-[3px]',
+  'flex min-h-[230px] flex-col justify-between rounded-lg bg-highlight p-[1.6rem] text-brand no-underline transition-transform duration-200 hover:-translate-y-[3px]',
+];
+const LEAD_CLASSES = {
+  default: 'mb-0 max-w-[58ch] text-ink-muted',
+  inverse: 'mb-0 max-w-[58ch] text-paper-muted',
+};
+const CENTERED_LEAD_CLASSES = {
+  default: 'mx-auto mb-0 max-w-[58ch] text-ink-muted',
+  inverse: 'mx-auto mb-0 max-w-[58ch] text-paper-muted',
+};
+const SECTION_HEADING_CLASSES = {
+  normal: 'mb-8',
+  tight: 'mb-0',
+  who: 'mb-[1.4rem]',
+};
 
 function createLandscape(width) {
   let seed = 7;
@@ -38,11 +67,11 @@ function createLandscape(width) {
     ridges.push({ d, fill });
   }
 
-  addRidge([130, 70, 110, 10, 90, 40, 110, 20, 100, 50, 95], '#b7cbc5');
-  addRidge([180, 130, 165, 90, 160, 120, 170, 105, 160, 125, 150], '#8fada5');
-  addTrees(215, 60, 95, 22, '#5f8a79');
-  addTrees(270, 85, 135, 30, '#2f5c49');
-  addTrees(350, 120, 190, 40, '#12261f');
+  addRidge([130, 70, 110, 10, 90, 40, 110, 20, 100, 50, 95], ENCOUNTER_COLORS.background);
+  addRidge([180, 130, 165, 90, 160, 120, 170, 105, 160, 125, 150], ENCOUNTER_COLORS.secondary);
+  addTrees(215, 60, 95, 22, ENCOUNTER_COLORS.secondary);
+  addTrees(270, 85, 135, 30, ENCOUNTER_COLORS.primary);
+  addTrees(350, 120, 190, 40, ENCOUNTER_COLORS.primary);
 
   return { width, ridges };
 }
@@ -75,9 +104,9 @@ function Landscape() {
     <svg ref={svgRef} className="landscape" viewBox={`0 0 ${scene.width} ${LANDSCAPE_HEIGHT}`} preserveAspectRatio="none" aria-hidden="true">
       <defs>
         <linearGradient id="mist" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#fff" stopOpacity="0" />
-          <stop offset=".5" stopColor="#fff" stopOpacity=".55" />
-          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0" stopColor={ENCOUNTER_COLORS.text} stopOpacity="0" />
+          <stop offset=".5" stopColor={ENCOUNTER_COLORS.text} stopOpacity=".55" />
+          <stop offset="1" stopColor={ENCOUNTER_COLORS.text} stopOpacity="0" />
         </linearGradient>
       </defs>
       <path d={scene.ridges[0].d} fill={scene.ridges[0].fill} />
@@ -90,39 +119,39 @@ function Landscape() {
 
 export function PageHero({ title, description, children, short = false }) {
   return (
-    <section className={short ? 'hero hero-short' : 'hero'}>
-      <div className="container hero-content">
-        <h1>{title}</h1>
-        <p>{description}</p>
-        {children && <div className="button-row">{children}</div>}
+    <section className={HERO_CLASSES[short ? 'short' : 'full']}>
+      <div className={HERO_CONTENT_CLASSES}>
+        <h1 className="mb-4 max-w-[800px] font-display text-[clamp(2.6rem,7.2vw,5.2rem)] font-semibold leading-[1.1]">{title}</h1>
+        <p className="mb-[1.8rem] max-w-[44ch] text-[1.2rem] text-brand">{description}</p>
+        {children && <div className="flex flex-wrap gap-[0.8rem]">{children}</div>}
       </div>
       <Landscape />
     </section>
   );
 }
 
-export function SectionHeading({ eyebrow, title, description }) {
+export function SectionHeading({ eyebrow, title, description, tone = 'default', spacing = 'normal', centered = false }) {
   return (
-    <div className="section-heading">
-      {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-      <h2>{title}</h2>
-      {description && <p className="lead">{description}</p>}
+    <div className={SECTION_HEADING_CLASSES[spacing] || SECTION_HEADING_CLASSES.normal}>
+      {eyebrow && <p className="mb-4 text-[0.85rem] font-bold uppercase tracking-[0.12em] text-sea-ink">{eyebrow}</p>}
+      <h2 className="mb-4 font-display text-[clamp(1.9rem,4vw,2.7rem)] font-semibold leading-[1.1]">{title}</h2>
+      {description && <p className={centered ? CENTERED_LEAD_CLASSES[tone] || CENTERED_LEAD_CLASSES.default : LEAD_CLASSES[tone] || LEAD_CLASSES.default}>{description}</p>}
     </div>
   );
 }
 
-export function ActionLink({ to, href, variant = 'gold', children, ...props }) {
-  const className = `button button-${variant}`;
+export function ActionLink({ to, href, purpose = 'connect', children, ...props }) {
+  const className = BUTTON_CLASSES[purpose] || BUTTON_CLASSES.connect;
   return to ? <Link className={className} to={to} {...props}>{children}</Link> : <a className={className} href={href} {...props}>{children}</a>;
 }
 
 export function MinistryGrid({ ministries }) {
   return (
-    <div className="ministry-grid">
-      {ministries.map(({ name, description }) => (
-        <article className="ministry-card" key={name}>
-          <h3>{name}</h3>
-          <p>{description}</p>
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
+      {ministries.map(({ name, description }, index) => (
+        <article className={MINISTRY_CARD_CLASSES[index % MINISTRY_CARD_CLASSES.length]} key={name}>
+          <h3 className="mb-[0.4rem] font-display text-xl font-semibold">{name}</h3>
+          <p className="m-0 text-base text-ink-muted">{description}</p>
         </article>
       ))}
     </div>
@@ -131,23 +160,24 @@ export function MinistryGrid({ ministries }) {
 
 export function LinkCardGrid({ items }) {
   return (
-    <div className="link-card-grid">
-      {items.map(({ eyebrow, title, description, label, to, href }) => {
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-[1.2rem]">
+      {items.map(({ eyebrow, title, description, label, to, href }, index) => {
         const content = (
           <>
             <div>
-              <small>{eyebrow}</small>
-              <h3>{title}</h3>
-              {description && <p>{description}</p>}
+              <small className="font-semibold opacity-[0.85]">{eyebrow}</small>
+              <h3 className="my-[0.4rem] mb-[0.8rem] font-display text-2xl font-semibold">{title}</h3>
+              {description && <p className="mb-4">{description}</p>}
             </div>
-            <span>{label}</span>
+            <span className="self-start border-b-2 border-current font-semibold">{label}</span>
           </>
         );
+        const className = LINK_CARD_CLASSES[index < LINK_CARD_CLASSES.length ? index : 0];
 
         return to ? (
-          <Link className="link-card" to={to} key={title}>{content}</Link>
+          <Link className={className} to={to} key={title}>{content}</Link>
         ) : (
-          <a className="link-card" href={href} target="_blank" rel="noreferrer" key={title}>{content}</a>
+          <a className={className} href={href} target="_blank" rel="noreferrer" key={title}>{content}</a>
         );
       })}
     </div>
@@ -156,11 +186,11 @@ export function LinkCardGrid({ items }) {
 
 export function ServiceSchedule({ services }) {
   return (
-    <ul className="service-schedule">
+    <ul className="m-0 grid list-none gap-[0.6rem] p-0">
       {services.map(({ time, name }) => (
-        <li key={time}>
-          <strong>{time}</strong>
-          <span>{name}</span>
+        <li className="flex justify-between gap-4 rounded-lg bg-brand-soft p-4 first:bg-highlight first:text-brand max-[520px]:flex-col max-[520px]:gap-[0.1rem]" key={time}>
+          <strong className="font-display text-[1.15rem] font-semibold">{time}</strong>
+          <span className="text-right text-[0.95rem] max-[520px]:text-left">{name}</span>
         </li>
       ))}
     </ul>
@@ -169,30 +199,30 @@ export function ServiceSchedule({ services }) {
 
 export function ContactLinks({ light = false }) {
   return (
-    <div className={light ? 'contact-links is-light' : 'contact-links'}>
-      <a href="mailto:pastorjordan@encounterministries.org">pastorjordan@encounterministries.org</a>
-      <a href="tel:+15097151500">509-715-1500</a>
+    <div className="mt-[1.4rem] grid justify-items-start gap-[0.2rem] font-medium">
+      <a className={light ? 'text-highlight no-underline hover:underline' : 'text-secondary-ink no-underline hover:underline'} href="mailto:pastorjordan@encounterministries.org">pastorjordan@encounterministries.org</a>
+      <a className={light ? 'text-highlight no-underline hover:underline' : 'text-secondary-ink no-underline hover:underline'} href="tel:+15097151500">509-715-1500</a>
     </div>
   );
 }
 
 export function VisitSection({ compact = false }) {
   return (
-    <section className="visit-section" id="visit">
-      <div className="container">
+    <section className="relative bg-brand py-[5.5rem] text-paper max-[820px]:py-[3.5rem]" id="visit">
+      <div className={CONTAINER_CLASSES}>
         {compact ? (
           <>
-            <SectionHeading title="Come see for yourself" description="Join us Sundays at 10:00 AM at 645 N Grand in Pullman." />
-            <ActionLink to="/connect">Get connected</ActionLink>
+            <SectionHeading tone="inverse" title="Come see for yourself" description="Join us Sundays at 10:00 AM at 645 N Grand in Pullman." />
+            <ActionLink to="/connect" purpose="connect">Get connected</ActionLink>
           </>
         ) : (
-          <div className="visit-layout">
+          <div className="grid grid-cols-[1fr_1.2fr] items-start gap-12 max-[820px]:grid-cols-1 max-[820px]:gap-8">
             <div>
-              <SectionHeading title="Visit us in Pullman" description="Everyone is welcome, whatever your background or where you are in your faith." />
-              <address>645 N Grand<br />Pullman, WA</address>
-              <div className="button-row">
-                <ActionLink href="https://maps.google.com/?q=645+N+Grand+Pullman+WA" target="_blank" rel="noreferrer">Get directions</ActionLink>
-                <ActionLink href="tel:+15097151500" variant="outline">Call 509-715-1500</ActionLink>
+              <SectionHeading tone="inverse" title="Visit us in Pullman" description="Everyone is welcome, whatever your background or where you are in your faith." />
+              <address className="my-4 mb-[1.4rem] text-[1.15rem] not-italic">645 N Grand<br />Pullman, WA</address>
+              <div className="flex flex-wrap gap-[0.8rem]">
+                <ActionLink href="https://maps.google.com/?q=645+N+Grand+Pullman+WA" purpose="directions" target="_blank" rel="noreferrer">Get directions</ActionLink>
+                <ActionLink href="tel:+15097151500" purpose="call">Call 509-715-1500</ActionLink>
               </div>
             </div>
             <ServiceSchedule services={[

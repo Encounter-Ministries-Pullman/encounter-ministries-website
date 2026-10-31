@@ -1,17 +1,18 @@
 import { ActionLink, LinkCardGrid, PageHero, SectionHeading, VisitSection } from '../components/ContentBlocks.jsx';
+import { CONTAINER_CLASSES } from '../constants.tsx';
 import { PrayerForm } from '../components/Forms.jsx';
 
 export function HomePage() {
   return (
     <>
       <PageHero title={<>A church family<br />for the Palouse.</>} description="Come Encounter God together with us.">
-        <ActionLink to="/#week" variant="dark">Watch online</ActionLink>
+        <ActionLink to="/#week" purpose="watch">Watch online</ActionLink>
       </PageHero>
 
       <VisitSection />
 
-      <section className="content-section" id="week">
-        <div className="container">
+      <section className="relative py-22 max-[820px]:py-14" id="week">
+        <div className={CONTAINER_CLASSES}>
           <SectionHeading title="This week at Encounter" description="Can't make it in person? Join a service online or catch up on the latest message." />
           <LinkCardGrid items={[
             { eyebrow: 'Sermons', title: 'Watch the latest message', label: 'Open YouTube', href: 'https://www.youtube.com/channel/UCECIy1zJmZWYAqKruTIBB-w/videos' },
@@ -21,17 +22,17 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="content-section" id="prayer">
-        <div className="container form-layout">
+      <section className="relative py-22 max-[820px]:py-14" id="prayer">
+        <div className="relative mx-auto grid w-[calc(100%-3rem)] max-w-265 grid-cols-2 items-start gap-14 max-[820px]:w-[calc(100%-2rem)] max-[820px]:grid-cols-1 max-[820px]:gap-8">
           <SectionHeading title="How can we pray for you?" description="Share a need and our prayer team will lift it up. You can keep it private." />
           <PrayerForm />
         </div>
       </section>
 
-      <section className="give-section" id="give">
-        <div className="container">
-          <SectionHeading title="Bring your first and best." description="Your generosity supports our ministry efforts on the Palouse and so much more." />
-          <ActionLink href="https://www.easytithe.com/encounterpullman" target="_blank" rel="noreferrer">Give securely online</ActionLink>
+      <section className="relative bg-brand py-22 text-center text-paper max-[820px]:py-14" id="give">
+        <div className={CONTAINER_CLASSES}>
+          <SectionHeading tone="inverse" centered title="Bring your first and best." description="Your generosity supports our ministry efforts on the Palouse and so much more." />
+          <ActionLink href="https://www.easytithe.com/encounterpullman" purpose="give" target="_blank" rel="noreferrer">Give securely online</ActionLink>
         </div>
       </section>
     </>

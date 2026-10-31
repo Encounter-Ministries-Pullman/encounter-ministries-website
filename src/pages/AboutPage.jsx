@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ActionLink, ContactLinks, MinistryGrid, PageHero, SectionHeading, VisitSection } from '../components/ContentBlocks.jsx';
+import { BUTTON_CLASSES } from '../constants.tsx';
 
 const INSTAGRAM_PROFILE = 'https://www.instagram.com/';
 const INSTAGRAM_FEED_URL = '';
@@ -71,19 +72,19 @@ function InstagramCarousel() {
 
   if (hidden) {
     return (
-      <section className="instagram-section" id="instagram">
-        <div className="container">
-          <SectionHeading title="Life at Encounter" description="A look at what's happening in our church family." />
-          <p className="instagram-follow"><a className="button" href={INSTAGRAM_PROFILE} target="_blank" rel="noreferrer">Follow us on Instagram</a></p>
+      <section className="relative overflow-hidden bg-brand py-22 text-paper max-[820px]:py-14" id="instagram">
+        <div className={CONTAINER_CLASSES}>
+          <SectionHeading tone="inverse" spacing="tight" title="Life at Encounter" description="A look at what's happening in our church family." />
+          <p className="mb-0 mt-6 text-center"><a className={BUTTON_CLASSES.instagram} href={INSTAGRAM_PROFILE} target="_blank" rel="noreferrer">Follow us on Instagram</a></p>
         </div>
       </section>
     );
   }
 
   return (
-    <section className="instagram-section" id="instagram">
-      <div className="container">
-        <SectionHeading title="Life at Encounter" description="A look at what's happening in our church family." />
+    <section className="relative overflow-hidden bg-brand py-22 text-paper max-[820px]:py-14" id="instagram">
+      <div className={CONTAINER_CLASSES}>
+        <SectionHeading tone="inverse" spacing="tight" title="Life at Encounter" description="A look at what's happening in our church family." />
       </div>
       <div
         className="instagram-stage"
@@ -117,7 +118,7 @@ function InstagramCarousel() {
             <img src={post.image} alt={post.alt || 'Photo from Encounter Ministries on Instagram'} loading="lazy" draggable="false" />
           ) : 'Sample photo';
           const sharedProps = {
-            className: `instagram-slide${post.image ? '' : ' is-sample'}`,
+            className: post.image ? 'instagram-slide' : 'instagram-slide is-sample',
             'data-pos': position,
             'aria-hidden': position !== '0',
             onClick: (event) => {
@@ -139,8 +140,8 @@ function InstagramCarousel() {
         <button className="instagram-arrow instagram-prev" type="button" aria-label="Previous photo" onClick={() => move(-1)}>‹</button>
         <button className="instagram-arrow instagram-next" type="button" aria-label="Next photo" onClick={() => move(1)}>›</button>
       </div>
-      <div className="container">
-        <p className="instagram-follow"><a className="button" href={INSTAGRAM_PROFILE} target="_blank" rel="noreferrer">Follow us on Instagram</a></p>
+      <div className={CONTAINER_CLASSES}>
+        <p className="mb-0 mt-6 text-center"><a className={BUTTON_CLASSES.instagram} href={INSTAGRAM_PROFILE} target="_blank" rel="noreferrer">Follow us on Instagram</a></p>
       </div>
     </section>
   );
@@ -148,16 +149,16 @@ function InstagramCarousel() {
 
 function LeadershipSection() {
   return (
-    <section className="leadership-section" id="leaders">
-      <div className="container">
+    <section className="relative py-22 max-[820px]:py-14" id="leaders">
+      <div className={CONTAINER_CLASSES}>
         <SectionHeading title="Encounter Leadership" description="Meet the people who lead and serve at Encounter. Reach out to any of them directly." />
-        <div className="leader-grid">
-          <article className="leader-card">
-            <img src="/pastor.jpg" alt="The Lachance family" loading="lazy" />
-            <div className="leader-content">
-              <h3>Pastor Jordan Lachance</h3>
-              <p className="leader-role">Pastor</p>
-              <p>Pastor Jordan and Melanie Lachance are graduates of Christ for the Nations Institute in the Dallas-Fort Worth area, originally from the Northeast. They love people and carry a fire for the Holy Spirit, a heart for evangelism and pastoral ministry, and a passion to see people far from God planted firmly in the local church.</p>
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-[1.4rem]">
+          <article className="flex flex-col overflow-hidden rounded-lg border border-line bg-paper">
+            <img className="block aspect-square w-full bg-surface-soft object-cover" src="/photos/leadership/pastor.jpg" alt="The Lachance family" loading="lazy" />
+            <div className="flex flex-1 flex-col gap-2 px-[1.4rem] pb-6 pt-[1.4rem]">
+              <h3 className="m-0 font-display text-[1.35rem] font-semibold">Pastor Jordan Lachance</h3>
+              <p className="m-0 text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-sea-ink">Pastor</p>
+              <p className="m-0 text-base leading-[1.6] text-ink-muted">Pastor Jordan and Melanie Lachance are graduates of Christ for the Nations Institute in the Dallas-Fort Worth area, originally from the Northeast. They love people and carry a fire for the Holy Spirit, a heart for evangelism and pastoral ministry, and a passion to see people far from God planted firmly in the local church.</p>
               <ContactLinks />
             </div>
           </article>
@@ -171,27 +172,30 @@ export function AboutPage() {
   return (
     <>
       <PageHero title="About Encounter." description="A local church family in Pullman, Washington, united in our desire to experience God together." short>
-        <ActionLink to="#leaders" variant="dark">Meet our leadership</ActionLink>
+        <ActionLink to="#leaders" purpose="leadership">Meet our leadership</ActionLink>
       </PageHero>
 
-      <section className="who-section" id="who">
-        <div className="container who-layout">
+      <section className="relative py-26 max-[820px]:py-16" id="who">
+        <div className="relative mx-auto grid w-[calc(100%-3rem)] max-w-265 grid-cols-[1.35fr_1fr] items-center gap-18 max-[820px]:w-[calc(100%-2rem)] max-[820px]:grid-cols-1 max-[820px]:gap-8">
           <div>
-            <SectionHeading eyebrow="Who we are" title="A family united in faith" />
-            <p className="statement">We are a diverse group of brothers and sisters united in our desire to experience God together,</p>
-            <p className="statement accent">so that the lost may encounter God through us.</p>
+            <SectionHeading spacing="who" eyebrow="Who we are" title="A family united in faith" />
+            <p className="mb-0 font-display text-[clamp(1.8rem,3.6vw,2.7rem)] font-semibold leading-[1.2] text-brand">We are a diverse group of brothers and sisters united in our desire to experience God together,</p>
+            <p className="mb-0 mt-[0.6rem] font-display text-[clamp(1.8rem,3.6vw,2.7rem)] font-semibold leading-[1.2] text-sea-ink">so that the lost may encounter God through us.</p>
           </div>
-          <div className="who-aside">
-            <p>Encounter Ministries is a local church family in Pullman, Washington. Whoever you are and wherever you are in your faith, there is a seat for you.</p>
-            <ul className="tags">
-              <li>Non-denominational</li><li>Spirit-filled</li><li>Local church family</li><li>Pullman, WA</li>
+          <div className="border-l-4 border-highlight pl-8 max-[820px]:pl-[1.4rem]">
+            <p className="mb-[1.3rem] text-ink-muted">Encounter Ministries is a local church family in Pullman, Washington. Whoever you are and wherever you are in your faith, there is a seat for you.</p>
+            <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
+              <li className="rounded-full bg-surface-soft px-[0.85rem] py-[0.35rem] text-[0.9rem] font-semibold text-brand">Non-denominational</li>
+              <li className="rounded-full bg-surface-soft px-[0.85rem] py-[0.35rem] text-[0.9rem] font-semibold text-brand">Spirit-filled</li>
+              <li className="rounded-full bg-surface-soft px-[0.85rem] py-[0.35rem] text-[0.9rem] font-semibold text-brand">Local church family</li>
+              <li className="rounded-full bg-surface-soft px-[0.85rem] py-[0.35rem] text-[0.9rem] font-semibold text-brand">Pullman, WA</li>
             </ul>
           </div>
         </div>
       </section>
 
-      <section className="content-section section-soft" id="believe">
-        <div className="container">
+      <section className="relative bg-surface-soft py-22 max-[820px]:py-14" id="believe">
+        <div className={CONTAINER_CLASSES}>
           <SectionHeading title="What we believe" description="Our faith rests on three foundations." />
           <MinistryGrid ministries={[
             { name: 'The Trinity', description: 'One God in three persons: Father, Son, and Holy Spirit.' },
