@@ -16,7 +16,6 @@ export const BUTTON_CLASSES = Object.freeze({
   connect: 'inline-flex min-h-[46px] items-center justify-center rounded-full border-2 border-highlight bg-highlight px-5 py-[0.65rem] font-semibold text-brand no-underline transition-[filter] hover:brightness-110',
   give: 'inline-flex min-h-[46px] items-center justify-center rounded-full border-2 border-highlight bg-highlight px-5 py-[0.65rem] font-semibold text-brand no-underline transition-[filter] hover:brightness-110',
   directions: 'inline-flex min-h-[46px] items-center justify-center rounded-full border-2 border-highlight bg-highlight px-5 py-[0.65rem] font-semibold text-brand no-underline transition-[filter] hover:brightness-110',
-  instagram: 'inline-flex min-h-[46px] items-center justify-center rounded-full border-2 border-highlight bg-highlight px-5 py-[0.65rem] font-semibold text-brand no-underline transition-[filter] hover:brightness-110',
   watch: 'inline-flex min-h-[46px] items-center justify-center rounded-full border-2 border-brand bg-brand px-5 py-[0.65rem] font-semibold text-paper no-underline transition-[filter] hover:brightness-110',
   leadership: 'inline-flex min-h-[46px] items-center justify-center rounded-full border-2 border-brand bg-brand px-5 py-[0.65rem] font-semibold text-paper no-underline transition-[filter] hover:brightness-110',
   form: 'inline-flex min-h-[46px] items-center justify-center rounded-full border-2 border-brand bg-brand px-5 py-[0.65rem] font-semibold text-paper no-underline transition-[filter] hover:brightness-110',

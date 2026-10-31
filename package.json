@@ -12,6 +12,7 @@
     "@formspree/react": "^3.0.0",
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-react": "latest",
+    "lucide-react": "^1.66.0",
     "react": "latest",
     "react-dom": "latest",
     "react-router-dom": "latest",

@@ -1,53 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { ActionLink, ContactLinks, MinistryGrid, PageHero, SectionHeading, VisitSection } from '../components/ContentBlocks.jsx';
-import { BUTTON_CLASSES } from '../constants.tsx';
+import { CONTAINER_CLASSES } from '../constants.tsx';
 
-const INSTAGRAM_PROFILE = 'https://www.instagram.com/';
-const INSTAGRAM_FEED_URL = '';
-const INSTAGRAM_SECONDS = 5;
+const PHOTOS = __ENCOUNTER_PHOTO_FILES__.map((filename) => `${import.meta.env.BASE_URL}photos/carousel/encounter-ministries-photos/${filename}`);
 
-function InstagramCarousel() {
-  const stageRef = useRef(null);
+const CAROUSEL_INTERVAL_MS = 5000;
+
+function PhotoCarousel() {
   const touchStart = useRef(null);
-  const [posts, setPosts] = useState(() => Array.from({ length: 6 }, () => ({})));
   const [active, setActive] = useState(0);
   const [hovering, setHovering] = useState(false);
   const [focused, setFocused] = useState(false);
   const [tabHidden, setTabHidden] = useState(false);
-  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    if (!INSTAGRAM_FEED_URL) return undefined;
-
-    let cancelled = false;
-    fetch(INSTAGRAM_FEED_URL)
-      .then((response) => {
-        if (!response.ok) throw new Error('Instagram feed request failed');
-        return response.json();
-      })
-      .then((json) => {
-        const list = json.posts || json.data || json;
-        const loadedPosts = list.map((post) => {
-          const size = post.sizes && (post.sizes.medium || post.sizes.large || post.sizes.small);
-          const image = (size && size.mediaUrl) || post.thumbnailUrl || post.thumbnail_url || post.mediaUrl || post.media_url;
-          const caption = (post.caption || '').replace(/\s+/g, ' ').trim().slice(0, 110);
-          return { image, link: post.permalink, alt: caption || undefined };
-        }).filter((post) => post.image).slice(0, 12);
-        if (!loadedPosts.length) throw new Error('Instagram feed contains no photos');
-        if (!cancelled) setPosts(loadedPosts);
-      })
-      .catch(() => {
-        if (!cancelled) setHidden(true);
-      });
-
-    return () => { cancelled = true; };
-  }, []);
-
-  useEffect(() => {
-    if (hidden || hovering || focused || tabHidden || posts.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
-    const timer = window.setInterval(() => setActive((index) => (index + 1) % posts.length), INSTAGRAM_SECONDS * 1000);
+    if (hovering || focused || tabHidden || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const timer = window.setInterval(() => setActive((index) => (index + 1) % PHOTOS.length), CAROUSEL_INTERVAL_MS);
     return () => window.clearInterval(timer);
-  }, [hidden, hovering, focused, tabHidden, posts.length]);
+  }, [hovering, focused, tabHidden]);
 
   useEffect(() => {
     const pauseWhenHidden = () => setTabHidden(document.hidden);
@@ -56,7 +27,7 @@ function InstagramCarousel() {
   }, []);
 
   function move(direction) {
-    setActive((index) => (index + direction + posts.length) % posts.length);
+    setActive((index) => (index + direction + PHOTOS.length) % PHOTOS.length);
   }
 
   function handleKeyDown(event) {
@@ -70,29 +41,17 @@ function InstagramCarousel() {
     }
   }
 
-  if (hidden) {
-    return (
-      <section className="relative overflow-hidden bg-brand py-22 text-paper max-[820px]:py-14" id="instagram">
-        <div className={CONTAINER_CLASSES}>
-          <SectionHeading tone="inverse" spacing="tight" title="Life at Encounter" description="A look at what's happening in our church family." />
-          <p className="mb-0 mt-6 text-center"><a className={BUTTON_CLASSES.instagram} href={INSTAGRAM_PROFILE} target="_blank" rel="noreferrer">Follow us on Instagram</a></p>
-        </div>
-      </section>
-    );
-  }
-
   return (
-    <section className="relative overflow-hidden bg-brand py-22 text-paper max-[820px]:py-14" id="instagram">
+    <section className="relative overflow-hidden bg-brand py-22 text-paper max-[820px]:py-14" id="photos">
       <div className={CONTAINER_CLASSES}>
         <SectionHeading tone="inverse" spacing="tight" title="Life at Encounter" description="A look at what's happening in our church family." />
       </div>
       <div
-        className="instagram-stage"
-        ref={stageRef}
+        className="photo-carousel-stage"
         tabIndex="0"
         role="region"
         aria-roledescription="carousel"
-        aria-label="Instagram photos"
+        aria-label="Encounter photos"
         onKeyDown={handleKeyDown}
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
@@ -109,39 +68,23 @@ function InstagramCarousel() {
           setFocused(false);
         }}
       >
-        {posts.map((post, index) => {
-          const count = posts.length;
+        {PHOTOS.map((image, index) => {
+          const count = PHOTOS.length;
           let distance = ((index - active) % count + count) % count;
           if (distance > count / 2) distance -= count;
           const position = distance === 0 ? '0' : distance === -1 ? '-1' : distance === 1 ? '1' : 'x';
-          const content = post.image ? (
-            <img src={post.image} alt={post.alt || 'Photo from Encounter Ministries on Instagram'} loading="lazy" draggable="false" />
-          ) : 'Sample photo';
-          const sharedProps = {
-            className: post.image ? 'instagram-slide' : 'instagram-slide is-sample',
-            'data-pos': position,
-            'aria-hidden': position !== '0',
-            onClick: (event) => {
-              if (position === '-1' || position === '1') {
-                event.preventDefault();
-                move(Number(position));
-              }
-            },
-          };
-
-          return post.image ? (
-            <a {...sharedProps} href={post.link || INSTAGRAM_PROFILE} target="_blank" rel="noreferrer" tabIndex={position === '0' ? 0 : -1} key={`${post.image}-${index}`}>
-              {content}
-            </a>
-          ) : (
-            <div {...sharedProps} key={`sample-${index}`}>{content}</div>
+          return (
+            <div className="photo-carousel-slide" data-pos={position} aria-hidden={position !== '0'} key={image}>
+              <img src={image} alt={`Encounter Ministries, photo ${index + 1}`} loading="lazy" draggable="false" />
+            </div>
           );
         })}
-        <button className="instagram-arrow instagram-prev" type="button" aria-label="Previous photo" onClick={() => move(-1)}>‹</button>
-        <button className="instagram-arrow instagram-next" type="button" aria-label="Next photo" onClick={() => move(1)}>›</button>
-      </div>
-      <div className={CONTAINER_CLASSES}>
-        <p className="mb-0 mt-6 text-center"><a className={BUTTON_CLASSES.instagram} href={INSTAGRAM_PROFILE} target="_blank" rel="noreferrer">Follow us on Instagram</a></p>
+        <button className="photo-carousel-arrow photo-carousel-prev" type="button" aria-label="Previous photo" onClick={() => move(-1)}>
+          <ArrowLeft size={20} aria-hidden="true" />
+        </button>
+        <button className="photo-carousel-arrow photo-carousel-next" type="button" aria-label="Next photo" onClick={() => move(1)}>
+          <ArrowRight size={20} aria-hidden="true" />
+        </button>
       </div>
     </section>
   );
@@ -205,7 +148,7 @@ export function AboutPage() {
         </div>
       </section>
 
-      <InstagramCarousel />
+      <PhotoCarousel />
 
       <LeadershipSection />
 

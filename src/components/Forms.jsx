@@ -11,15 +11,16 @@ function DeliveryNotice() {
     className="m-0 border-l-4 border-highlight bg-status-surface px-4 py-[0.9rem] font-semibold text-brand"
     role="status"
     aria-live="polite"
-  >Your form is ready, but online message delivery is not configured yet. Please call 509-715-1500 to reach the team.</p>;
+  >Thanks for reaching out! Your form has been submitted.</p>;
 }
 
 export function PrayerForm() {
-  const [submitted, setSubmitted] = useState(false);
+  const [state, submitToFormspree] = useForm('mdeewege');
 
   return (
-    <form className="grid gap-4" onSubmit={(event) => { event.preventDefault(); setSubmitted(true); }}>
-      {submitted && <DeliveryNotice />}
+    <form className="grid gap-4" onSubmit={submitToFormspree}>
+      {state.succeeded && <DeliveryNotice />}
+      {state.errors?.length > 0 && <p className="m-0 border-l-4 border-highlight bg-status-surface px-4 py-[0.9rem] font-semibold text-brand" role="alert">There was a problem sending your message. Please try again.</p>}
       <label className={FORM_LABEL_CLASSES}>Name (optional)<input className={FORM_FIELD_CLASSES} name="name" autoComplete="name" /></label>
       <label className={FORM_LABEL_CLASSES}>Email (optional)<input className={FORM_FIELD_CLASSES} type="email" name="email" autoComplete="email" /></label>
       <label className={FORM_LABEL_CLASSES}>Your request<textarea className={FORM_TEXTAREA_CLASSES} name="request" rows="4" required /></label>
@@ -43,7 +44,7 @@ export function ConnectForm() {
     const phone = form.elements.namedItem('phone');
     const missingContact = !email.value.trim() && !phone.value.trim();
     
-    phone.setCustomValidity(
+    email.setCustomValidity(
       missingContact ? 'Please add an email or phone number.' : ''
     );
 
@@ -55,9 +56,15 @@ export function ConnectForm() {
     submitToFormspree(event);
   }
 
+  function clearContactValidity(event) {
+    const form = event.currentTarget;
+    form.elements.namedItem('email').setCustomValidity('');
+    form.elements.namedItem('phone').setCustomValidity('');
+  }
+
   return (
-    <form className="grid gap-4" onSubmit={handleConnectSubmit} onChange={(event) => event.target.setCustomValidity?.('')}>
-      {state.succeeded && <p className="m-0 border-l-4 border-highlight bg-status-surface px-4 py-[0.9rem] font-semibold text-brand" role="status" aria-live="polite">Thanks for reaching out. Your message has been sent.</p>}
+    <form className="grid gap-4" onSubmit={handleConnectSubmit} onChange={clearContactValidity}>
+      {state.succeeded && <DeliveryNotice />}
       {state.errors?.length > 0 && <p className="m-0 border-l-4 border-highlight bg-status-surface px-4 py-[0.9rem] font-semibold text-brand" role="alert">There was a problem sending your message. Please try again.</p>}
       <label className={FORM_LABEL_CLASSES}>Name<input className={FORM_FIELD_CLASSES} name="name" required autoComplete="name" /></label>
       <div className="grid grid-cols-2 gap-4 max-[520px]:grid-cols-1">
