@@ -1,0 +1,21 @@
+name: Launch feature or goal
+description: Describe a feature, goal, or task needed for the website launch.
+projects: ["Encounter-Ministries-Pullman/1"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Explain what needs to be accomplished and why.
+    validations:
+      required: true
+  - type: textarea
+    id: definition-of-done
+    attributes:
+      label: Definition of Done
+      description: List the observable conditions that must be met before this work is complete.
+      placeholder: |
+        - [ ] The feature works as described.
+        - [ ] The result has been reviewed.
+    validations:
+      required: true
