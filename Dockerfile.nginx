@@ -1,0 +1,25 @@
+# Basic image definition for React SPA deployment.
+FROM node:24-slim AS build
+
+WORKDIR /app
+
+COPY package*.json ./
+
+# Install NPM packages required to build.
+RUN npm ci
+
+COPY . .
+RUN npm run build
+
+FROM nginx:alpine AS deploy
+
+# Use NGINX to serve up built React content.
+
+# Vite specific build results being copied.
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# EXPOSE doesn't do anything, it's just instructive of what port to expose when
+# the Docker image is built and the container is spun up.
+EXPOSE 80
+# Keeps NGINX running in the foreground so the Docker container doesn't stop.
+CMD ["nginx", "-g", "daemon off;"]

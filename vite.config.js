@@ -21,5 +21,8 @@ export default defineConfig({
         home: resolve(process.cwd(), 'index.html'),
       },
     },
+    // Prevents Base64 encoding bloat.
+    // Enforces that images are always standalone cacheable assets.
+    assetsInlineLimit: 0,
   },
 });
