@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BUTTON_CLASSES, CONTAINER_CLASSES, ENCOUNTER_COLORS } from '../constants.tsx';
+import { BUTTON_CLASSES, CONTAINER_CLASSES, ENCOUNTER_COLORS } from '../constants';
+import { CHURCH_CONTACT, SUNDAY_SERVICE_TIME } from '../constants/site';
 
 const LANDSCAPE_HEIGHT = 360;
 const HERO_CONTENT_CLASSES = 'relative mx-auto z-[2] w-[calc(100%-3rem)] max-w-265 pb-[250px] max-[820px]:w-[calc(100%-2rem)] max-[820px]:pb-[190px]';
@@ -112,7 +113,7 @@ function Landscape() {
       <path d={scene.ridges[0].d} fill={scene.ridges[0].fill} />
       <path d={scene.ridges[1].d} fill={scene.ridges[1].fill} />
       <rect y="120" width={scene.width} height="110" fill="url(#mist)" />
-      {scene.ridges.slice(2).map(({ d, fill }) => <path key={fill} d={d} fill={fill} />)}
+      {scene.ridges.slice(2).map(({ d, fill }, index) => <path key={`ridge-${index}`} d={d} fill={fill} />)}
     </svg>
   );
 }
@@ -201,7 +202,7 @@ export function ContactLinks({ light = false }) {
   return (
     <div className="mt-[1.4rem] grid justify-items-start gap-[0.2rem] font-medium">
       <a className={light ? 'text-highlight no-underline hover:underline' : 'text-secondary-ink no-underline hover:underline'} href="mailto:pastorjordan@encounterministries.org">pastorjordan@encounterministries.org</a>
-      <a className={light ? 'text-highlight no-underline hover:underline' : 'text-secondary-ink no-underline hover:underline'} href="tel:+15097151500">509-715-1500</a>
+      <a className={light ? 'text-highlight no-underline hover:underline' : 'text-secondary-ink no-underline hover:underline'} href={CHURCH_CONTACT.phoneHref}>{CHURCH_CONTACT.phone}</a>
     </div>
   );
 }
@@ -212,21 +213,21 @@ export function VisitSection({ compact = false }) {
       <div className={CONTAINER_CLASSES}>
         {compact ? (
           <>
-            <SectionHeading tone="inverse" title="Come see for yourself" description="Join us Sundays at 10:00 AM at 645 N Grand in Pullman." />
+            <SectionHeading tone="inverse" title="Come see for yourself" description={`Join us Sundays at ${SUNDAY_SERVICE_TIME} at ${CHURCH_CONTACT.address} in ${CHURCH_CONTACT.city}.`} />
             <ActionLink to="/connect" purpose="connect">Get connected</ActionLink>
           </>
         ) : (
           <div className="grid grid-cols-[1fr_1.2fr] items-start gap-12 max-[820px]:grid-cols-1 max-[820px]:gap-8">
             <div>
               <SectionHeading tone="inverse" title="Visit us in Pullman" description="Everyone is welcome, whatever your background or where you are in your faith." />
-              <address className="my-4 mb-[1.4rem] text-[1.15rem] not-italic">645 N Grand<br />Pullman, WA</address>
+              <address className="my-4 mb-[1.4rem] text-[1.15rem] not-italic">{CHURCH_CONTACT.address}<br />{CHURCH_CONTACT.city}, {CHURCH_CONTACT.state}</address>
               <div className="flex flex-wrap gap-[0.8rem]">
                 <ActionLink href="https://maps.google.com/?q=645+N+Grand+Pullman+WA" purpose="directions" target="_blank" rel="noreferrer">Get directions</ActionLink>
-                <ActionLink href="tel:+15097151500" purpose="call">Call 509-715-1500</ActionLink>
+                <ActionLink href={CHURCH_CONTACT.phoneHref} purpose="call">Call {CHURCH_CONTACT.phone}</ActionLink>
               </div>
             </div>
             <ServiceSchedule services={[
-              { time: 'Sunday, 10:00 AM', name: 'Worship service' },
+              { time: `Sunday, ${SUNDAY_SERVICE_TIME}`, name: 'Worship service' },
               { time: 'Monday, 6:00 AM', name: "Men's prayer meeting" },
               { time: 'Monday, 6:00 PM', name: 'Corporate intercession' },
               { time: 'Wednesday, 6 to 8 PM', name: 'Food at 6, teaching after' },

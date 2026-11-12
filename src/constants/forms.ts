@@ -1,0 +1,2 @@
+export const FORM_ERROR_CLASSES = 'm-0 border-l-4 border-highlight bg-status-surface px-4 py-[0.9rem] font-semibold text-brand';
+export const FORM_ERROR_MESSAGE = 'There was a problem sending your message. Please try again.';

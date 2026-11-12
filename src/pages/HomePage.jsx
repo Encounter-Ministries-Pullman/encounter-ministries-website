@@ -1,5 +1,5 @@
 import { ActionLink, LinkCardGrid, PageHero, SectionHeading, VisitSection } from '../components/ContentBlocks.jsx';
-import { CONTAINER_CLASSES } from '../constants.tsx';
+import { CONTAINER_CLASSES } from '../constants';
 import { PrayerForm } from '../components/Forms.jsx';
 
 export function HomePage() {

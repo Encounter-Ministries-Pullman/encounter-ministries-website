@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
-import { CONTAINER_CLASSES } from '../constants.tsx';
+import { CONTAINER_CLASSES } from '../constants';
+import { CHURCH_CONTACT } from '../constants/site';
 
 const NAV_LIST_CLASSES = {
   open: 'm-0 flex list-none items-center gap-[1.3rem] p-0 max-[820px]:w-full max-[820px]:flex-col max-[820px]:items-stretch max-[820px]:gap-0 max-[820px]:pb-4',
@@ -67,7 +68,7 @@ export function SiteFooter() {
   return (
     <footer className="bg-brand-deep py-10 text-[0.95rem] text-paper-muted">
       <div className="relative mx-auto flex w-[calc(100%-3rem)] max-w-265 flex-wrap justify-between gap-8 max-[820px]:w-[calc(100%-2rem)] max-[520px]:flex-col max-[520px]:gap-4">
-        <p className="m-0">Encounter Ministries<br />645 N Grand, Pullman, WA <span aria-hidden="true">|</span> 509-715-1500</p>
+        <p className="m-0">{CHURCH_CONTACT.name}<br />{CHURCH_CONTACT.address}, {CHURCH_CONTACT.city}, {CHURCH_CONTACT.state} <span aria-hidden="true">|</span> {CHURCH_CONTACT.phone}</p>
         <div className="flex gap-4">
           <a className="text-paper" href="https://www.facebook.com/EMPalouse/" target="_blank" rel="noreferrer">Facebook</a>
           <a className="text-paper" href="https://www.youtube.com/channel/UCECIy1zJmZWYAqKruTIBB-w/videos" target="_blank" rel="noreferrer">YouTube</a>

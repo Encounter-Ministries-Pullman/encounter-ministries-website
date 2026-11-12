@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
-import { ENCOUNTER_COLORS } from './constants.tsx';
+import { ENCOUNTER_COLORS } from './constants';
 import './styles.css';
 
 for (const [name, color] of Object.entries(ENCOUNTER_COLORS)) {

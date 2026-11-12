@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck:images": "tsc --noEmit -p tsconfig.typecheck.json"
   },
   "dependencies": {
     "@formspree/react": "^3.0.0",
@@ -19,5 +20,10 @@
     "react-router-dom": "latest",
     "tailwindcss": "^4.3.3",
     "vite": "latest"
+  },
+  "devDependencies": {
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "typescript": "latest"
   }
 }
