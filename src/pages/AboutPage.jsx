@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { ActionLink, ContactLinks, MinistryGrid, PageHero, SectionHeading, VisitSection } from '../components/ContentBlocks.jsx';
-import { CONTAINER_CLASSES } from '../constants.tsx';
-
-const PHOTOS = __ENCOUNTER_PHOTO_FILES__.map((filename) => `${import.meta.env.BASE_URL}photos/carousel/encounter-ministries-photos/${filename}`);
+import { CloudImage } from '../components/CloudImage';
+import { CONTAINER_CLASSES } from '../constants';
+import { useMediaCollection } from '../hooks/useMediaCollection';
 
 const CAROUSEL_INTERVAL_MS = 5000;
+const CAROUSEL_SIZES = '(max-width: 647px) 220px, (max-width: 1235px) 34vw, 420px';
 
 function PhotoCarousel() {
+  const { images: photos, status } = useMediaCollection('worship');
   const touchStart = useRef(null);
   const [active, setActive] = useState(0);
   const [hovering, setHovering] = useState(false);
@@ -15,10 +17,10 @@ function PhotoCarousel() {
   const [tabHidden, setTabHidden] = useState(false);
 
   useEffect(() => {
-    if (hovering || focused || tabHidden || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
-    const timer = window.setInterval(() => setActive((index) => (index + 1) % PHOTOS.length), CAROUSEL_INTERVAL_MS);
+    if (photos.length < 2 || hovering || focused || tabHidden || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const timer = window.setInterval(() => setActive((index) => (index + 1) % photos.length), CAROUSEL_INTERVAL_MS);
     return () => window.clearInterval(timer);
-  }, [hovering, focused, tabHidden]);
+  }, [photos.length, hovering, focused, tabHidden]);
 
   useEffect(() => {
     const pauseWhenHidden = () => setTabHidden(document.hidden);
@@ -27,7 +29,8 @@ function PhotoCarousel() {
   }, []);
 
   function move(direction) {
-    setActive((index) => (index + direction + PHOTOS.length) % PHOTOS.length);
+    if (photos.length < 2) return;
+    setActive((index) => (index + direction + photos.length) % photos.length);
   }
 
   function handleKeyDown(event) {
@@ -68,36 +71,64 @@ function PhotoCarousel() {
           setFocused(false);
         }}
       >
-        {PHOTOS.map((image, index) => {
-          const count = PHOTOS.length;
+        {status === 'loading' && <p className="absolute inset-0 grid place-items-center text-paper/80" role="status">Loading photos...</p>}
+        {status === 'error' && <p className="absolute inset-0 grid place-items-center text-paper/80" role="alert">Photos are temporarily unavailable.</p>}
+        {status === 'ready' && photos.length === 0 && <p className="absolute inset-0 grid place-items-center text-paper/80" role="status">No photos are available right now.</p>}
+        {photos.map((image, index) => {
+          const count = photos.length;
           let distance = ((index - active) % count + count) % count;
           if (distance > count / 2) distance -= count;
           const position = distance === 0 ? '0' : distance === -1 ? '-1' : distance === 1 ? '1' : 'x';
           return (
-            <div className="photo-carousel-slide" data-pos={position} aria-hidden={position !== '0'} key={image}>
-              <img src={image} alt={`Encounter Ministries, photo ${index + 1}`} loading="lazy" draggable="false" />
+            <div className="photo-carousel-slide" data-pos={position} aria-hidden={position !== '0'} key={image.objectKey}>
+              <CloudImage
+                image={image}
+                alt={`Encounter Ministries worship photo ${index + 1}`}
+                sizes={CAROUSEL_SIZES}
+                draggable={false}
+                style={{ height: '100%' }}
+              />
             </div>
           );
         })}
-        <button className="photo-carousel-arrow photo-carousel-prev" type="button" aria-label="Previous photo" onClick={() => move(-1)}>
-          <ArrowLeft size={20} aria-hidden="true" />
-        </button>
-        <button className="photo-carousel-arrow photo-carousel-next" type="button" aria-label="Next photo" onClick={() => move(1)}>
-          <ArrowRight size={20} aria-hidden="true" />
-        </button>
+        {photos.length > 1 && (
+          <>
+            <button className="photo-carousel-arrow photo-carousel-prev" type="button" aria-label="Previous photo" onClick={() => move(-1)}>
+              <ArrowLeft size={20} aria-hidden="true" />
+            </button>
+            <button className="photo-carousel-arrow photo-carousel-next" type="button" aria-label="Next photo" onClick={() => move(1)}>
+              <ArrowRight size={20} aria-hidden="true" />
+            </button>
+          </>
+        )}
       </div>
     </section>
   );
 }
 
 function LeadershipSection() {
+  const { images, status } = useMediaCollection('leadership');
+  const pastor = images.find((image) => image.objectKey === 'encounter-ministries-photos/leadership/pastor.jpg');
+
   return (
     <section className="relative py-22 max-[820px]:py-14" id="leaders">
       <div className={CONTAINER_CLASSES}>
         <SectionHeading title="Encounter Leadership" description="Meet the people who lead and serve at Encounter. Reach out to any of them directly." />
         <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-[1.4rem]">
           <article className="flex flex-col overflow-hidden rounded-lg border border-line bg-paper">
-            <img className="block aspect-square w-full bg-surface-soft object-cover" src="/photos/leadership/pastor.jpg" alt="The Lachance family" loading="lazy" />
+            {pastor ? (
+              <CloudImage
+                className="block aspect-square w-full bg-surface-soft object-cover"
+                image={pastor}
+                alt="The Lachance family"
+                sizes="(max-width: 820px) calc(100vw - 2rem), 420px"
+                style={{ height: 'auto', aspectRatio: '1 / 1' }}
+              />
+            ) : (
+              <div className="aspect-square w-full bg-surface-soft" aria-hidden="true" />
+            )}
+            {status === 'error' && <p className="m-0 px-[1.4rem] pt-4 text-sm text-ink-muted" role="alert">Photo is temporarily unavailable.</p>}
+            {status === 'ready' && !pastor && <p className="m-0 px-[1.4rem] pt-4 text-sm text-ink-muted" role="status">Photo is not listed.</p>}
             <div className="flex flex-1 flex-col gap-2 px-[1.4rem] pb-6 pt-[1.4rem]">
               <h3 className="m-0 font-display text-[1.35rem] font-semibold">Pastor Jordan Lachance</h3>
               <p className="m-0 text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-sea-ink">Pastor</p>

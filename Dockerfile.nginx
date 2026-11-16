@@ -3,13 +3,17 @@ FROM node:24-slim AS build
 
 WORKDIR /app
 
+# Use to specify the API service URL for performing Encounter-specific backend functions.
+ARG VITE_MEDIA_API_ORIGIN
+ENV VITE_MEDIA_API_ORIGIN=${VITE_MEDIA_API_ORIGIN}
+
 COPY package*.json ./
 
 # Install NPM packages required to build.
 RUN npm ci
 
 COPY . .
-RUN npm run build
+RUN test -n "$VITE_MEDIA_API_ORIGIN" && npm run build
 
 FROM nginx:alpine AS deploy
 

@@ -1,6 +1,7 @@
 import { ActionLink, ContactLinks, LinkCardGrid, MinistryGrid, PageHero, SectionHeading } from '../components/ContentBlocks.jsx';
 import { ConnectForm } from '../components/Forms.jsx';
-import { CONTAINER_CLASSES } from '../constants.tsx';
+import { CONTAINER_CLASSES } from '../constants';
+import { CHURCH_CONTACT, SUNDAY_SERVICE_TIME } from '../constants/site';
 
 const ministries = [
   { name: 'Encounter Youth', description: 'A place for teens to grow in faith and friendship.' },
@@ -23,7 +24,7 @@ export function ConnectPage() {
         <div className={CONTAINER_CLASSES}>
           <SectionHeading title="Three easy ways to start" description="You don't need to have it all figured out. Pick the one that fits where you are." />
           <LinkCardGrid items={[
-            { eyebrow: 'New here?', title: 'Visit on a Sunday', description: 'Join us at 10:00 AM at 645 N Grand in Pullman.', label: 'See times and directions', to: '/#visit' },
+            { eyebrow: 'New here?', title: 'Visit on a Sunday', description: `Join us at ${SUNDAY_SERVICE_TIME} at ${CHURCH_CONTACT.address} in ${CHURCH_CONTACT.city}.`, label: 'See times and directions', to: '/#visit' },
             { eyebrow: 'Want a lower-key first step?', title: 'Come Wednesday night', description: 'Food at 6, teaching after, until 8.', label: 'See the full schedule', to: '/#visit' },
             { eyebrow: 'Ready to get involved?', title: 'Serve or join a ministry', description: "Tell us what you're interested in and we'll point you to the right leader.", label: 'Fill out the form', to: '#form' },
           ]} />
