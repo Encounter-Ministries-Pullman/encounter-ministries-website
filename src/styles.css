@@ -28,7 +28,7 @@
   --color-secondary-ink: color-mix(in srgb, var(--color-secondary) 65%, var(--color-primary));
   --color-background-soft: color-mix(in srgb, var(--color-background) 82%, var(--color-secondary));
   --color-background-subtle: color-mix(in srgb, var(--color-background) 78%, var(--color-text));
-  --color-muted: color-mix(in srgb, var(--color-primary) 65%, var(--color-background));
+  --color-muted: color-mix(in srgb, var(--color-primary) 82%, var(--color-background));
   --color-border: color-mix(in srgb, var(--color-primary) 22%, var(--color-background));
   --color-dark-muted: color-mix(in srgb, var(--color-text) 75%, var(--color-secondary));
   --color-status: color-mix(in srgb, var(--color-background) 60%, var(--color-contrast));
