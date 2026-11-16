@@ -1,12 +1,44 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { ActionLink, ContactLinks, MinistryGrid, PageHero, SectionHeading, VisitSection } from '../components/ContentBlocks.jsx';
+import { ActionLink, PageHero, SectionHeading, VisitSection } from '../components/ContentBlocks.jsx';
 import { CloudImage } from '../components/CloudImage';
+import { BeliefsGrid } from '../components/BeliefsGrid.jsx';
+import { LeadershipCard } from '../components/LeadershipCard.jsx';
 import { CONTAINER_CLASSES } from '../constants';
+import { CHURCH_CONTACT } from '../constants/site';
 import { useMediaCollection } from '../hooks/useMediaCollection';
 
 const CAROUSEL_INTERVAL_MS = 5000;
 const CAROUSEL_SIZES = '(max-width: 647px) 220px, (max-width: 1235px) 34vw, 420px';
+const LEADERSHIP = [
+  {
+    name: 'Pastor Jordan Lachance',
+    role: 'Pastor',
+    imageKey: 'encounter-ministries-photos/leadership/pastor.jpg',
+    imageAlt: 'The Lachance family',
+    description: 'Pastor Jordan and his wife Melanie Lachance are graduates of Christ for the Nations Institute in the Dallas-Fort Worth area, originally from the Northeast. They love people and carry a fire for the Holy Spirit, a heart for evangelism and pastoral ministry, and a passion to see people far from God planted firmly in the local church.',
+    contacts: [
+      { type: 'email', label: 'Email', value: 'pastorjordan@encounterministries.org' },
+      { type: 'phone', label: 'Church phone', value: CHURCH_CONTACT.phone },
+    ],
+  },
+  {
+    name: 'Bill Cofer',
+    role: 'Church Elder',
+    imageKey: 'encounter-ministries-photos/leadership/billcofer.jpg',
+    imageAlt: 'Church Elder Bill Cofer',
+    description: 'This is a pending description about our amazing Bill.',
+    contacts: []
+  },
+  {
+    name: 'Bill Slinkard',
+    role: 'Church Elder',
+    imageKey: 'encounter-ministries-photos/leadership/billslinkard.jpg',
+    imageAlt: 'Church Elder Bill Cofer',
+    description: 'This is a pending description about our OTHER amazing Bill.',
+    contacts: []
+  },
+];
 
 function PhotoCarousel() {
   const { images: photos, status } = useMediaCollection('worship');
@@ -108,34 +140,16 @@ function PhotoCarousel() {
 
 function LeadershipSection() {
   const { images, status } = useMediaCollection('leadership');
-  const pastor = images.find((image) => image.objectKey === 'encounter-ministries-photos/leadership/pastor.jpg');
 
   return (
     <section className="relative py-22 max-[820px]:py-14" id="leaders">
       <div className={CONTAINER_CLASSES}>
         <SectionHeading title="Encounter Leadership" description="Meet the people who lead and serve at Encounter. Reach out to any of them directly." />
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-[1.4rem]">
-          <article className="flex flex-col overflow-hidden rounded-lg border border-line bg-paper">
-            {pastor ? (
-              <CloudImage
-                className="block aspect-square w-full bg-surface-soft object-cover"
-                image={pastor}
-                alt="The Lachance family"
-                sizes="(max-width: 820px) calc(100vw - 2rem), 420px"
-                style={{ height: 'auto', aspectRatio: '1 / 1' }}
-              />
-            ) : (
-              <div className="aspect-square w-full bg-surface-soft" aria-hidden="true" />
-            )}
-            {status === 'error' && <p className="m-0 px-[1.4rem] pt-4 text-sm text-ink-muted" role="alert">Photo is temporarily unavailable.</p>}
-            {status === 'ready' && !pastor && <p className="m-0 px-[1.4rem] pt-4 text-sm text-ink-muted" role="status">Photo is not listed.</p>}
-            <div className="flex flex-1 flex-col gap-2 px-[1.4rem] pb-6 pt-[1.4rem]">
-              <h3 className="m-0 font-display text-[1.35rem] font-semibold">Pastor Jordan Lachance</h3>
-              <p className="m-0 text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-sea-ink">Pastor</p>
-              <p className="m-0 text-base leading-[1.6] text-ink-muted">Pastor Jordan and Melanie Lachance are graduates of Christ for the Nations Institute in the Dallas-Fort Worth area, originally from the Northeast. They love people and carry a fire for the Holy Spirit, a heart for evangelism and pastoral ministry, and a passion to see people far from God planted firmly in the local church.</p>
-              <ContactLinks />
-            </div>
-          </article>
+        <div className="flex flex-wrap items-stretch gap-[1.4rem]">
+          {LEADERSHIP.map((leader) => {
+            const image = images.find((item) => item.objectKey === leader.imageKey);
+            return <LeadershipCard key={leader.name} leader={leader} image={image} imageStatus={status} />;
+          })}
         </div>
       </div>
     </section>
@@ -170,11 +184,16 @@ export function AboutPage() {
 
       <section className="relative bg-surface-soft py-22 max-[820px]:py-14" id="believe">
         <div className={CONTAINER_CLASSES}>
-          <SectionHeading title="What we believe" description="Our faith rests on three foundations." />
-          <MinistryGrid ministries={[
+          <SectionHeading title="What we believe" description="Our church affirms these essential truths." />
+          <BeliefsGrid beliefs={[
             { name: 'The Trinity', description: 'One God in three persons: Father, Son, and Holy Spirit.' },
             { name: 'The authority of Scripture', description: 'The Bible guides what we believe and how we live.' },
             { name: 'Salvation by grace', description: 'Received through faith, not earned.' },
+            { name: 'Insert other belief here', description: 'This is a spot for another belief.' },
+            { name: 'Insert other belief here', description: 'This is a spot for another belief.' },
+            { name: 'Insert other belief here', description: 'This is a spot for another belief.' },
+            { name: 'Insert other belief here', description: 'This is a spot for another belief.' },
+            { name: 'Insert other belief here', description: 'This is a spot for another belief.' },
           ]} />
         </div>
       </section>
