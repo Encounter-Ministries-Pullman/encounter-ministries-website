@@ -15,6 +15,8 @@ npm install
 npm run dev
 ```
 
+The About page loads photo keys from the FastAPI media catalog and requests the image transforms from the media CDN. During development, the catalog defaults to `http://localhost:8000`; set `VITE_MEDIA_API_ORIGIN` to override it. Production Docker builds require that variable, and the API's `CORS_ORIGINS` must include the deployed website origin.
+
 Create and preview a production build with:
 
 ```sh
