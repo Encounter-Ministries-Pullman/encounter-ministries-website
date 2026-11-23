@@ -121,7 +121,7 @@ function LeadershipSection() {
                 className="block aspect-square w-full bg-surface-soft object-cover"
                 image={pastor}
                 alt="The Lachance family"
-                sizes="(max-width: 820px) calc(100vw - 2rem), 420px"
+                sizes="(max-width: 820px) calc(100vw - 2rem), min(calc(100vw - 3rem), 66.25rem)"
                 style={{ height: 'auto', aspectRatio: '1 / 1' }}
               />
             ) : (

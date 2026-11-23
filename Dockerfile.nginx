@@ -5,7 +5,9 @@ WORKDIR /app
 
 # Use to specify the API service URL for performing Encounter-specific backend functions.
 ARG VITE_MEDIA_API_ORIGIN
+ARG VITE_MEDIA_ORIGIN
 ENV VITE_MEDIA_API_ORIGIN=${VITE_MEDIA_API_ORIGIN}
+ENV VITE_MEDIA_ORIGIN=${VITE_MEDIA_ORIGIN}
 
 COPY package*.json ./
 
