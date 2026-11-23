@@ -14,6 +14,7 @@ deploy:
 	DEPLOY_HOST=$${DEPLOY_HOST:-}; \
 	SSH_KEY_FILE=$${SSH_KEY_FILE:-}; \
 	VITE_MEDIA_API_ORIGIN=$${VITE_MEDIA_API_ORIGIN:-}; \
+	VITE_MEDIA_ORIGIN=$${VITE_MEDIA_ORIGIN:-}; \
 	if [ -z "$$IMAGE_TAG" ]; then \
 		printf 'Image tag [latest]: '; IFS= read -r IMAGE_TAG; \
 		IMAGE_TAG=$${IMAGE_TAG:-latest}; \
@@ -27,9 +28,13 @@ deploy:
 	if [ -z "$$VITE_MEDIA_API_ORIGIN" ]; then \
 		printf 'Media API origin: '; IFS= read -r VITE_MEDIA_API_ORIGIN; \
 	fi; \
+	if [ -z "$VITE_MEDIA_ORIGIN" ]; then \
+		printf 'Media S3 origin: '; IFS= read -r VITE_MEDIA_ORIGIN; \
+	fi; \
 	if [ -z "$$DEPLOY_HOST" ]; then echo 'Remote host is required.' >&2; exit 1; fi; \
 	if [ ! -r "$$SSH_KEY_FILE" ]; then echo "SSH key is not readable: $$SSH_KEY_FILE" >&2; exit 1; fi; \
 	if [ -z "$$VITE_MEDIA_API_ORIGIN" ]; then echo 'Media API origin is required.' >&2; exit 1; fi; \
+	if [-z "$$VITE_MEDIA_ORIGIN" ]; then echo 'Media S3 origin is required.' >&2; exit 1; fi; \
 	command -v docker >/dev/null || { echo 'docker is required.' >&2; exit 1; }; \
 	command -v scp >/dev/null || { echo 'scp is required.' >&2; exit 1; }; \
 	IMAGE="$(IMAGE_NAME):$$IMAGE_TAG"; \

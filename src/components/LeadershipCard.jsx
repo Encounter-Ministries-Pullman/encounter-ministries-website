@@ -2,7 +2,7 @@ import { CloudImage } from './CloudImage';
 
 function getContactHref({ type, value }) {
   if (type === 'email') return `mailto:${value}`;
-  if (type === 'phone') return `tel:${value.replace(/[^\d+]/g, '')}`;
+  if (type === 'phone') return `tel:${value}`;
   return value;
 }
 
@@ -11,7 +11,7 @@ export function LeadershipCard({ leader, image, imageStatus }) {
 
   return (
     <article className="flex min-h-[37rem] min-w-0 max-w-[520px] flex-[1_1_340px] flex-col rounded-lg border border-line bg-paper p-5 max-[820px]:min-h-[42rem]">
-      <div className="flex items-start gap-4">
+      <div className="flex flex-col items-start gap-4 sm:flex-row">
         {image ? (
           <CloudImage
             className="block size-48 shrink-0 rounded-sm bg-surface-soft object-cover"

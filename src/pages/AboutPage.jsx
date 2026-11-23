@@ -27,15 +27,15 @@ const LEADERSHIP = [
     role: 'Church Elder',
     imageKey: 'encounter-ministries-photos/leadership/billcofer.jpg',
     imageAlt: 'Church Elder Bill Cofer',
-    description: 'This is a pending description about our amazing Bill.',
+    description: '',
     contacts: []
   },
   {
     name: 'Bill Slinkard',
     role: 'Church Elder',
     imageKey: 'encounter-ministries-photos/leadership/billslinkard.jpg',
-    imageAlt: 'Church Elder Bill Cofer',
-    description: 'This is a pending description about our OTHER amazing Bill.',
+    imageAlt: 'Church Elder Bill Slinkard',
+    description: '',
     contacts: []
   },
 ];
@@ -189,11 +189,6 @@ export function AboutPage() {
             { name: 'The Trinity', description: 'One God in three persons: Father, Son, and Holy Spirit.' },
             { name: 'The authority of Scripture', description: 'The Bible guides what we believe and how we live.' },
             { name: 'Salvation by grace', description: 'Received through faith, not earned.' },
-            { name: 'Insert other belief here', description: 'This is a spot for another belief.' },
-            { name: 'Insert other belief here', description: 'This is a spot for another belief.' },
-            { name: 'Insert other belief here', description: 'This is a spot for another belief.' },
-            { name: 'Insert other belief here', description: 'This is a spot for another belief.' },
-            { name: 'Insert other belief here', description: 'This is a spot for another belief.' },
           ]} />
         </div>
       </section>

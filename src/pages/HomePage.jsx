@@ -31,7 +31,7 @@ export function HomePage() {
 
       <section className="relative bg-brand py-22 text-center text-paper max-[820px]:py-14" id="give">
         <div className={CONTAINER_CLASSES}>
-          <SectionHeading tone="inverse" centered title="Bring your first and best." description="Your generosity supports our ministry efforts on the Palouse and so much more." />
+          <SectionHeading tone="inverse" centered title="Tithes and Offerings" description="Your generosity supports our ministry efforts on the Palouse and so much more." />
           <ActionLink href="https://www.easytithe.com/encounterpullman" purpose="give" target="_blank" rel="noreferrer">Give securely online</ActionLink>
         </div>
       </section>

@@ -3,20 +3,14 @@ import { Link, NavLink, Outlet } from 'react-router-dom';
 import { CONTAINER_CLASSES } from '../constants';
 import { CHURCH_CONTACT } from '../constants/site';
 
-const NAV_LIST_CLASSES = {
-  open: 'm-0 flex list-none items-center gap-[1.3rem] p-0 max-[820px]:w-full max-[820px]:flex-col max-[820px]:items-stretch max-[820px]:gap-0 max-[820px]:pb-4',
-  closed: 'm-0 flex list-none items-center gap-[1.3rem] p-0 max-[820px]:hidden max-[820px]:w-full max-[820px]:flex-col max-[820px]:items-stretch max-[820px]:gap-0 max-[820px]:pb-4',
-};
-const NAV_LINK_CLASSES = {
-  active: 'text-[0.95rem] font-medium text-sea-ink no-underline hover:text-sea-ink max-[820px]:block max-[820px]:py-[0.55rem]',
-  inactive: 'text-[0.95rem] font-medium text-brand no-underline hover:text-sea-ink max-[820px]:block max-[820px]:py-[0.55rem]',
-};
+const NAV_LIST_CLASSES = 'm-0 flex list-none items-center gap-[1.3rem] p-0 max-[820px]:w-full max-[820px]:flex-col max-[820px]:items-start max-[820px]:gap-2';
+const NAV_BUTTON_CLASSES = 'inline-flex min-h-10 items-center justify-center rounded-md bg-brand px-3 py-2 text-[0.95rem] font-medium text-white no-underline transition-[filter] hover:brightness-110';
 
 const navigation = [
   { label: 'Watch', to: '/#week' },
   { label: 'Connect', to: '/connect' },
   { label: 'About', to: '/about' },
-  { label: 'Give', to: '/#give' },
+  { label: 'Give', to: '', href: 'https://www.easytithe.com/encounterpullman' },
 ];
 
 export function SiteHeader() {
@@ -25,9 +19,13 @@ export function SiteHeader() {
   return (
     <header className="absolute inset-x-0 top-0 z-[5] max-[820px]:relative max-[820px]:bg-surface-soft">
       <div className={CONTAINER_CLASSES}>
-        <nav className="flex min-h-[76px] items-center justify-between gap-4 max-[820px]:min-h-[70px] max-[820px]:flex-wrap" aria-label="Main navigation">
+        <nav className="flex min-h-[76px] items-center justify-between gap-4 max-[820px]:min-h-[70px] max-[820px]:flex-wrap max-[820px]:gap-y-0 max-[820px]:content-center" aria-label="Main navigation">
           <Link className="font-display text-[1.4rem] font-semibold text-brand no-underline max-[520px]:text-[1.2rem]" to="/" onClick={() => setMenuOpen(false)}>
-            Encounter Ministries
+            <img
+              className="block h-[clamp(3rem,5vw,3.5rem)] w-auto max-w-[min(65vw,18rem)] object-contain"
+              src="/images/EMLogoTransparent.png"
+              alt="Encounter Ministries Logo"
+            />
           </Link>
           <button
             className="hidden h-11 w-11 flex-col items-center justify-center gap-[5px] rounded-md border border-line bg-transparent max-[820px]:flex"
@@ -41,16 +39,26 @@ export function SiteHeader() {
             <span className="h-0.5 w-[19px] bg-brand" />
             <span className="h-0.5 w-[19px] bg-brand" />
           </button>
-          <ul id="primary-navigation" className={NAV_LIST_CLASSES[menuOpen ? 'open' : 'closed']}>
-            {navigation.map(({ label, to }) => (
+          <ul
+            id="primary-navigation"
+            className={`${NAV_LIST_CLASSES} mobile-navigation`}
+            data-open={menuOpen}
+          >
+            {navigation.map(({ label, to, href }) => (
               <li key={label}>
-                {to.includes('#') ? (
-                  <Link to={to} onClick={() => setMenuOpen(false)}>{label}</Link>
+                {href ? (
+                  <a
+                    className={NAV_BUTTON_CLASSES}
+                    href={href}
+                    onClick={() => setMenuOpen(false)}
+                    target="_blank"
+                    rel="noreferrer"
+                  >{label}</a>
                 ) : (
                   <NavLink
                     to={to}
                     onClick={() => setMenuOpen(false)}
-                    className={({ isActive }) => NAV_LINK_CLASSES[isActive ? 'active' : 'inactive']}
+                    className={NAV_BUTTON_CLASSES}
                   >
                     {label}
                   </NavLink>
