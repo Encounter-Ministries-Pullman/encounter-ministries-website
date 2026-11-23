@@ -24,9 +24,9 @@ npm run build
 npm run preview
 ```
 
-The app has Home, About, and Connect pages. The existing `about.html` and `connect.html` URLs are preserved as React entry points. Shared layouts and content blocks live in `src/components`, with route-specific content in `src/pages`.
+The app has Home, About, and Connect pages. Shared layouts and content blocks live in `src/components`, with route-specific content in `src/pages`.
 
-The prayer and connect forms currently provide browser-side validation only. Connect a form service or backend before expecting submissions to reach church staff.
+The prayer and connect forms are connected to Formspree forms through a free tier subscription that is established with the Encounter Ministries media account. The Formspree service allows 50 form submissions per month before charging based on a per-request API rate. Make sure to monitor this in case requests get to be above 50 in one month which would cause us to need to either upgrade our account or implement our own custom solution which would take more effort and resources.
 
 ## Maintainers
 
