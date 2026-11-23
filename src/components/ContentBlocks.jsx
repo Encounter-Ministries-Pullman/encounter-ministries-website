@@ -6,8 +6,8 @@ import { CHURCH_CONTACT, SUNDAY_SERVICE_TIME } from '../constants/site';
 const LANDSCAPE_HEIGHT = 360;
 const HERO_CONTENT_CLASSES = 'relative mx-auto z-[2] w-[calc(100%-3rem)] max-w-265 pb-[250px] max-[820px]:w-[calc(100%-2rem)] max-[820px]:pb-[190px]';
 const HERO_CLASSES = {
-  full: 'relative min-h-[490px] overflow-hidden bg-[linear-gradient(180deg,var(--color-background-soft)_0,var(--color-background-subtle)_55%,var(--color-background)_100%)] pt-[8.5rem] text-brand max-[820px]:min-h-[400px] max-[820px]:pt-8',
-  short: 'relative min-h-0 overflow-hidden bg-[linear-gradient(180deg,var(--color-background-soft)_0,var(--color-background-subtle)_55%,var(--color-background)_100%)] pt-[8.5rem] text-brand max-[820px]:min-h-[400px] max-[820px]:pt-8',
+  full: 'relative min-h-[490px] overflow-hidden bg-[linear-gradient(180deg,var(--color-background-soft)_0,var(--color-background-subtle)_55%,var(--color-background)_100%)] pt-[7.5rem] text-brand max-[820px]:min-h-[400px] max-[820px]:pt-8',
+  short: 'relative min-h-0 overflow-hidden bg-[linear-gradient(180deg,var(--color-background-soft)_0,var(--color-background-subtle)_55%,var(--color-background)_100%)] pt-[7.5rem] text-brand max-[820px]:min-h-[400px] max-[820px]:pt-8',
 };
 const MINISTRY_CARD_CLASSES = [
   'min-h-[150px] rounded bg-paper border-t-4 border-sea p-6',

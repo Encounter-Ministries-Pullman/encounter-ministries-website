@@ -17,7 +17,7 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="absolute inset-x-0 top-0 z-[5] max-[820px]:relative max-[820px]:bg-surface-soft">
+    <header className="absolute inset-x-0 top-4 z-[5] max-[820px]:relative max-[820px]:top-0 max-[820px]:bg-surface-soft">
       <div className={CONTAINER_CLASSES}>
         <nav className="flex min-h-[76px] items-center justify-between gap-4 max-[820px]:min-h-[70px] max-[820px]:flex-wrap max-[820px]:gap-y-0 max-[820px]:content-center" aria-label="Main navigation">
           <Link className="font-display text-[1.4rem] font-semibold text-brand no-underline max-[520px]:text-[1.2rem]" to="/" onClick={() => setMenuOpen(false)}>
