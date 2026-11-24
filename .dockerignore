@@ -1,0 +1,25 @@
+.git/
+.gitignore
+.vscode/
+.idea/
+.github/
+
+node_modules/
+dist/
+.vite/
+coverage/
+*.tsbuildinfo
+
+# Local and deployment-only environment files; keep environments/.env.production.
+environments/.deploy.env
+environments/.env.development
+environments/.env.local
+environments/.env.*.local
+
+# Local artifacts and files not needed by the Vite build.
+*.tar
+*.log
+.DS_Store
+README.md
+Makefile
+tsconfig.typecheck.json

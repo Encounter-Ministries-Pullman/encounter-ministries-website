@@ -28,18 +28,20 @@ deploy:
 	if [ -z "$$VITE_MEDIA_API_ORIGIN" ]; then \
 		printf 'Media API origin: '; IFS= read -r VITE_MEDIA_API_ORIGIN; \
 	fi; \
-	if [ -z "$VITE_MEDIA_ORIGIN" ]; then \
+	if [ -z "$$VITE_MEDIA_ORIGIN" ]; then \
 		printf 'Media S3 origin: '; IFS= read -r VITE_MEDIA_ORIGIN; \
 	fi; \
 	if [ -z "$$DEPLOY_HOST" ]; then echo 'Remote host is required.' >&2; exit 1; fi; \
 	if [ ! -r "$$SSH_KEY_FILE" ]; then echo "SSH key is not readable: $$SSH_KEY_FILE" >&2; exit 1; fi; \
 	if [ -z "$$VITE_MEDIA_API_ORIGIN" ]; then echo 'Media API origin is required.' >&2; exit 1; fi; \
-	if [-z "$$VITE_MEDIA_ORIGIN" ]; then echo 'Media S3 origin is required.' >&2; exit 1; fi; \
+	if [ -z "$$VITE_MEDIA_ORIGIN" ]; then echo 'Media S3 origin is required.' >&2; exit 1; fi; \
 	command -v docker >/dev/null || { echo 'docker is required.' >&2; exit 1; }; \
 	command -v scp >/dev/null || { echo 'scp is required.' >&2; exit 1; }; \
 	IMAGE="$(IMAGE_NAME):$$IMAGE_TAG"; \
 	ARCHIVE="$(IMAGE_NAME)-$$IMAGE_TAG.tar"; \
-	docker build --build-arg "VITE_MEDIA_API_ORIGIN=$$VITE_MEDIA_API_ORIGIN" -f Dockerfile.nginx -t "$$IMAGE" .; \
+	docker build --build-arg "VITE_MEDIA_API_ORIGIN=$$VITE_MEDIA_API_ORIGIN" \
+				 --build-arg "VITE_MEDIA_ORIGIN=$$VITE_MEDIA_ORIGIN" \
+				 -f Dockerfile.nginx -t "$$IMAGE" .; \
 	docker save -o "$$ARCHIVE" "$$IMAGE"; \
 	sudo scp -i "$$SSH_KEY_FILE" "$$ARCHIVE" "$$DEPLOY_HOST:~/images"; \
 	printf 'Copied %s to %s:~/%s/images\n' "$$ARCHIVE" "$$DEPLOY_HOST" "$$ARCHIVE"
