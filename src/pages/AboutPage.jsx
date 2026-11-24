@@ -12,7 +12,7 @@ const CAROUSEL_INTERVAL_MS = 5000;
 const CAROUSEL_SIZES = '(max-width: 647px) 220px, (max-width: 1235px) 34vw, 420px';
 const LEADERSHIP = [
   {
-    name: 'Pastor Jordan Lachance',
+    name: 'Jordan Lachance',
     role: 'Pastor',
     imageKey: 'encounter-ministries-photos/leadership/pastor.jpg',
     imageAlt: 'The Lachance family',
