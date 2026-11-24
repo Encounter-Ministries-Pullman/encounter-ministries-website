@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { CONTAINER_CLASSES } from '../constants';
 import { ActionLink } from './ContentBlocks.jsx';
 
-const NAV_LIST_CLASSES = 'm-0 flex list-none items-center gap-[1.3rem] p-0 max-[820px]:w-full max-[820px]:flex-col max-[820px]:items-start max-[820px]:gap-2';
+const NAV_LIST_CLASSES = 'm-0 flex list-none items-center gap-[1.3rem] p-0 max-[820px]:w-full max-[820px]:flex-col max-[820px]:items-end max-[820px]:gap-2';
 
 const navigation = [
   { label: 'Watch', to: '/#week' },
@@ -16,7 +16,7 @@ export function PageHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="absolute inset-x-0 top-4 z-[5] max-[820px]:relative max-[820px]:top-0 max-[820px]:bg-surface-soft">
+    <header className="absolute inset-x-0 top-4 z-[5] max-[820px]:relative max-[820px]:top-0 max-[820px]:bg-surface-soft max-[820px]:pt-4">
       <div className={CONTAINER_CLASSES}>
         <nav className="flex min-h-[76px] items-center justify-between gap-4 max-[820px]:min-h-[70px] max-[820px]:flex-wrap max-[820px]:gap-y-0 max-[820px]:content-center" aria-label="Main navigation">
           <Link className="font-display text-[1.4rem] font-semibold text-brand no-underline max-[520px]:text-[1.2rem]" to="/" onClick={() => setMenuOpen(false)}>
