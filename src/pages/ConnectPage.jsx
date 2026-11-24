@@ -16,8 +16,8 @@ export function ConnectPage() {
   return (
     <>
       <PageHero title="Get connected." description="Wherever you are in your faith, there is a place for you here. Pick a first step below, or just tell us a little about yourself." short>
-        <ActionLink to="#form" purpose="form">Tell us about you</ActionLink>
-        <ActionLink to="#ways" purpose="ways">See ways to connect</ActionLink>
+        <ActionLink to="#form" variant="solid">Tell us about you</ActionLink>
+        <ActionLink to="#ways" variant="outline">See ways to connect</ActionLink>
       </PageHero>
 
       <section className="relative py-22 max-[820px]:py-14" id="ways">

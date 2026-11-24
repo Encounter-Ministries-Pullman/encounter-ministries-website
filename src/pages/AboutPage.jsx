@@ -160,7 +160,7 @@ export function AboutPage() {
   return (
     <>
       <PageHero title="About Encounter." description="A local church family in Pullman, Washington, united in our desire to experience God together." short>
-        <ActionLink to="#leaders" purpose="leadership">Meet our leadership</ActionLink>
+        <ActionLink to="#leaders" variant="solid">Meet our leadership</ActionLink>
       </PageHero>
 
       <section className="relative py-26 max-[820px]:py-16" id="who">

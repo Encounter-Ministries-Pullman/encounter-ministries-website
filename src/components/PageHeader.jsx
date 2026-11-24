@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CONTAINER_CLASSES } from '../constants';
+import { ActionLink } from './ContentBlocks.jsx';
 
 const NAV_LIST_CLASSES = 'm-0 flex list-none items-center gap-[1.3rem] p-0 max-[820px]:w-full max-[820px]:flex-col max-[820px]:items-start max-[820px]:gap-2';
-const NAV_BUTTON_CLASSES = 'inline-flex min-h-10 items-center justify-center rounded-md bg-brand px-3 py-2 text-[0.95rem] font-medium text-white no-underline transition-[filter] hover:brightness-110';
 
 const navigation = [
   { label: 'Watch', to: '/#week' },
@@ -46,21 +46,22 @@ export function PageHeader() {
             {navigation.map(({ label, to, href }) => (
               <li key={label}>
                 {href ? (
-                  <a
-                    className={NAV_BUTTON_CLASSES}
+                  <ActionLink
                     href={href}
+                    variant="accent"
                     onClick={() => setMenuOpen(false)}
                     target="_blank"
                     rel="noreferrer"
-                  >{label}</a>
+                  >{label}</ActionLink>
                 ) : (
-                  <NavLink
+                  <ActionLink
                     to={to}
+                    navLink
+                    variant="accent"
                     onClick={() => setMenuOpen(false)}
-                    className={NAV_BUTTON_CLASSES}
                   >
                     {label}
-                  </NavLink>
+                  </ActionLink>
                 )}
               </li>
             ))}

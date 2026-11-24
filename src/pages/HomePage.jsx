@@ -6,7 +6,7 @@ export function HomePage() {
   return (
     <>
       <PageHero title={<>A church family<br />for the Palouse.</>} description="Come Encounter God together with us.">
-        <ActionLink to="/#week" purpose="watch">Watch online</ActionLink>
+        <ActionLink to="/#week" variant="solid">Watch online</ActionLink>
       </PageHero>
 
       <VisitSection />
@@ -32,7 +32,7 @@ export function HomePage() {
       <section className="relative bg-brand py-22 text-center text-paper max-[820px]:py-14" id="give">
         <div className={CONTAINER_CLASSES}>
           <SectionHeading tone="inverse" centered title="Tithes and Offerings" description="Your generosity supports our ministry efforts on the Palouse and so much more." />
-          <ActionLink href="https://www.easytithe.com/encounterpullman" purpose="give" target="_blank" rel="noreferrer">Give securely online</ActionLink>
+          <ActionLink href="https://www.easytithe.com/encounterpullman" variant="accent" target="_blank" rel="noreferrer">Give securely online</ActionLink>
         </div>
       </section>
     </>

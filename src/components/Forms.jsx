@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BUTTON_CLASSES } from '../constants';
+import { BUTTON_VARIANTS } from '../constants';
 import { FORM_ERROR_CLASSES, FORM_ERROR_MESSAGE } from '../constants/forms';
 import { useForm } from '@formspree/react';
 
@@ -26,7 +26,7 @@ export function PrayerForm() {
       <label className={FORM_LABEL_CLASSES}>Email (optional)<input className={FORM_FIELD_CLASSES} type="email" name="email" autoComplete="email" /></label>
       <label className={FORM_LABEL_CLASSES}>Your request<textarea className={FORM_TEXTAREA_CLASSES} name="request" rows="4" required /></label>
       <label className="flex items-center gap-[0.6rem] font-medium"><input className="accent-sea" type="checkbox" name="private" value="yes" defaultChecked /> Keep this private to the prayer team</label>
-      <button className={BUTTON_CLASSES.submit} type="submit">Send prayer request</button>
+      <button className={`${BUTTON_VARIANTS.solid} justify-self-start`} type="submit">Send prayer request</button>
     </form>
   );
 }
@@ -81,7 +81,7 @@ export function ConnectForm() {
         </div>
       </fieldset>
       <label className={FORM_LABEL_CLASSES}>Anything else you'd like us to know? (optional)<textarea className={FORM_TEXTAREA_CLASSES} name="message" rows="4" /></label>
-      <button className={BUTTON_CLASSES.submit} type="submit" disabled={state.submitting}>{state.submitting ? 'Sending...' : 'Send'}</button>
+      <button className={`${BUTTON_VARIANTS.solid} justify-self-start`} type="submit" disabled={state.submitting}>{state.submitting ? 'Sending...' : 'Send'}</button>
     </form>
   );
 }
