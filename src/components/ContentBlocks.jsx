@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { BUTTON_CLASSES, CONTAINER_CLASSES, ENCOUNTER_COLORS } from '../constants';
+import { Link, NavLink } from 'react-router-dom';
+import { BUTTON_VARIANTS, CONTAINER_CLASSES, ENCOUNTER_COLORS } from '../constants';
 import { CHURCH_CONTACT, SUNDAY_SERVICE_TIME } from '../constants/site';
 
 const LANDSCAPE_HEIGHT = 360;
 const HERO_CONTENT_CLASSES = 'relative mx-auto z-[2] w-[calc(100%-3rem)] max-w-265 pb-[250px] max-[820px]:w-[calc(100%-2rem)] max-[820px]:pb-[190px]';
 const HERO_CLASSES = {
-  full: 'relative min-h-[490px] overflow-hidden bg-[linear-gradient(180deg,var(--color-background-soft)_0,var(--color-background-subtle)_55%,var(--color-background)_100%)] pt-[8.5rem] text-brand max-[820px]:min-h-[400px] max-[820px]:pt-8',
-  short: 'relative min-h-0 overflow-hidden bg-[linear-gradient(180deg,var(--color-background-soft)_0,var(--color-background-subtle)_55%,var(--color-background)_100%)] pt-[8.5rem] text-brand max-[820px]:min-h-[400px] max-[820px]:pt-8',
+  full: 'relative min-h-[490px] overflow-hidden bg-[linear-gradient(180deg,var(--color-background-soft)_0,var(--color-background-subtle)_55%,var(--color-background)_100%)] pt-[7.5rem] text-brand max-[820px]:min-h-[400px] max-[820px]:pt-8',
+  short: 'relative min-h-0 overflow-hidden bg-[linear-gradient(180deg,var(--color-background-soft)_0,var(--color-background-subtle)_55%,var(--color-background)_100%)] pt-[7.5rem] text-brand max-[820px]:min-h-[400px] max-[820px]:pt-8',
 };
 const MINISTRY_CARD_CLASSES = [
   'min-h-[150px] rounded bg-paper border-t-4 border-sea p-6',
@@ -141,9 +141,12 @@ export function SectionHeading({ eyebrow, title, description, tone = 'default', 
   );
 }
 
-export function ActionLink({ to, href, purpose = 'connect', children, ...props }) {
-  const className = BUTTON_CLASSES[purpose] || BUTTON_CLASSES.connect;
-  return to ? <Link className={className} to={to} {...props}>{children}</Link> : <a className={className} href={href} {...props}>{children}</a>;
+export function ActionLink({ to, href, variant = 'accent', children, navLink = false, ...props }) {
+  const className = BUTTON_VARIANTS[variant] || BUTTON_VARIANTS.accent;
+  if (!to) return <a className={className} href={href} {...props}>{children}</a>;
+
+  const RouterLink = navLink ? NavLink : Link;
+  return <RouterLink className={className} to={to} {...props}>{children}</RouterLink>;
 }
 
 export function MinistryGrid({ ministries }) {
@@ -214,7 +217,7 @@ export function VisitSection({ compact = false }) {
         {compact ? (
           <>
             <SectionHeading tone="inverse" title="Come see for yourself" description={`Join us Sundays at ${SUNDAY_SERVICE_TIME} at ${CHURCH_CONTACT.address} in ${CHURCH_CONTACT.city}.`} />
-            <ActionLink to="/connect" purpose="connect">Get connected</ActionLink>
+            <ActionLink to="/connect" variant="accent">Get connected</ActionLink>
           </>
         ) : (
           <div className="grid grid-cols-[1fr_1.2fr] items-start gap-12 max-[820px]:grid-cols-1 max-[820px]:gap-8">
@@ -222,8 +225,8 @@ export function VisitSection({ compact = false }) {
               <SectionHeading tone="inverse" title="Visit us in Pullman" description="Everyone is welcome, whatever your background or where you are in your faith." />
               <address className="my-4 mb-[1.4rem] text-[1.15rem] not-italic">{CHURCH_CONTACT.address}<br />{CHURCH_CONTACT.city}, {CHURCH_CONTACT.state}</address>
               <div className="flex flex-wrap gap-[0.8rem]">
-                <ActionLink href="https://maps.google.com/?q=645+N+Grand+Pullman+WA" purpose="directions" target="_blank" rel="noreferrer">Get directions</ActionLink>
-                <ActionLink href={CHURCH_CONTACT.phoneHref} purpose="call">Call {CHURCH_CONTACT.phone}</ActionLink>
+                <ActionLink href="https://maps.google.com/?q=645+N+Grand+Pullman+WA" variant="accent" target="_blank" rel="noreferrer">Get directions</ActionLink>
+                <ActionLink href={CHURCH_CONTACT.phoneHref} variant="outline">Call {CHURCH_CONTACT.phone}</ActionLink>
               </div>
             </div>
             <ServiceSchedule services={[
