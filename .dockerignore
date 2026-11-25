@@ -7,16 +7,15 @@
 node_modules/
 dist/
 .vite/
+.next/
 coverage/
 *.tsbuildinfo
 
-# Local and deployment-only environment files; keep environments/.env.production.
-environments/.deploy.env
-environments/.env.development
-environments/.env.local
-environments/.env.*.local
+# Runtime configuration is injected into the container, never copied into the image.
+environments/
+.env*
 
-# Local artifacts and files not needed by the Vite build.
+# Local artifacts and files not needed by the Next.js build.
 *.tar
 *.log
 .DS_Store
