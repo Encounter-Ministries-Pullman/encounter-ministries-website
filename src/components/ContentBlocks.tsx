@@ -1,5 +1,8 @@
+'use client';
+
 import { useEffect, useRef, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import Link from 'next/link';
+import type { AnchorHTMLAttributes, ComponentProps, ReactNode } from 'react';
 import { BUTTON_VARIANTS, CONTAINER_CLASSES, ENCOUNTER_COLORS } from '../constants';
 import { CHURCH_CONTACT, SUNDAY_SERVICE_TIME } from '../constants/site';
 
@@ -33,39 +36,67 @@ const SECTION_HEADING_CLASSES = {
   who: 'mb-[1.4rem]',
 };
 
-function createLandscape(width) {
+type LandscapeRidge = { d: string; fill: string };
+type SectionTone = keyof typeof LEAD_CLASSES;
+type SectionSpacing = keyof typeof SECTION_HEADING_CLASSES;
+type ButtonVariant = keyof typeof BUTTON_VARIANTS;
+
+type InternalActionLinkProps = {
+  to: string;
+  href?: never;
+  variant?: ButtonVariant;
+  children: ReactNode;
+} & Omit<ComponentProps<typeof Link>, 'className' | 'href' | 'children'>;
+
+type ExternalActionLinkProps = {
+  to?: never;
+  href: string;
+  variant?: ButtonVariant;
+  children: ReactNode;
+} & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'className' | 'href' | 'children'>;
+
+type ActionLinkProps = InternalActionLinkProps | ExternalActionLinkProps;
+
+type LinkCardItem = {
+  eyebrow: string;
+  title: string;
+  description?: string;
+  label: string;
+} & ({ to: string; href?: never } | { to?: never; href: string });
+
+function createLandscape(width: number): { width: number; ridges: LandscapeRidge[] } {
   let seed = 7;
   const random = () => {
     seed = (seed * 16807) % 2147483647;
     return seed / 2147483647;
   };
-  const ridges = [];
-  const ridgeX = [0, 110, 210, 360, 500, 650, 810, 970, 1120, 1290, 1440];
+  const ridges: LandscapeRidge[] = [];
+  const ridgeXPositions = [0, 110, 210, 360, 500, 650, 810, 970, 1120, 1290, 1440];
 
-  function addRidge(heights, fill) {
-    let d = `M0 ${LANDSCAPE_HEIGHT}`;
-    ridgeX.forEach((x, index) => {
-      d += `L${(x / 1440 * width).toFixed(1)} ${heights[index]}`;
+  function addRidge(heights: readonly number[], fill: string): void {
+    let pathData = `M0 ${LANDSCAPE_HEIGHT}`;
+    ridgeXPositions.forEach((position, index) => {
+      pathData += `L${(position / 1440 * width).toFixed(1)} ${heights[index]}`;
     });
-    ridges.push({ d: `${d}L${width} ${LANDSCAPE_HEIGHT}Z`, fill });
+    ridges.push({ d: `${pathData}L${width} ${LANDSCAPE_HEIGHT}Z`, fill });
   }
 
-  function addTrees(base, minHeight, maxHeight, step, fill) {
-    let d = '';
-    let x = -20;
-    while (x < width + 40) {
+  function addTrees(base: number, minHeight: number, maxHeight: number, step: number, fill: string): void {
+    let pathData = '';
+    let treePosition = -20;
+    while (treePosition < width + 40) {
       const height = minHeight + random() * (maxHeight - minHeight);
       const treeWidth = height * 0.46;
       for (let index = 0; index < 3; index += 1) {
         const apex = base - height + index * height * 0.26;
         const bottom = apex + height * 0.44;
         const halfWidth = treeWidth * (0.3 + 0.2 * index);
-        d += `M${x.toFixed(1)} ${apex}L${(x + halfWidth).toFixed(1)} ${bottom}L${(x - halfWidth).toFixed(1)} ${bottom}Z`;
+        pathData += `M${treePosition.toFixed(1)} ${apex}L${(treePosition + halfWidth).toFixed(1)} ${bottom}L${(treePosition - halfWidth).toFixed(1)} ${bottom}Z`;
       }
-      x += step * (0.7 + random() * 0.6);
+      treePosition += step * (0.7 + random() * 0.6);
     }
-    d += `M0 ${base - minHeight * 0.1}H${width}V${LANDSCAPE_HEIGHT}H0Z`;
-    ridges.push({ d, fill });
+    pathData += `M0 ${base - minHeight * 0.1}H${width}V${LANDSCAPE_HEIGHT}H0Z`;
+    ridges.push({ d: pathData, fill });
   }
 
   addRidge([130, 70, 110, 10, 90, 40, 110, 20, 100, 50, 95], ENCOUNTER_COLORS.background);
@@ -78,25 +109,26 @@ function createLandscape(width) {
 }
 
 function Landscape() {
-  const svgRef = useRef(null);
+  const svgRef = useRef<SVGSVGElement | null>(null);
   const [scene, setScene] = useState(() => createLandscape(1440));
 
   useEffect(() => {
-    const svg = svgRef.current;
-    let timer;
+    let timer: number | undefined;
     const draw = () => {
+      const svg = svgRef.current;
+      if (!svg) return;
       const width = Math.round(svg.getBoundingClientRect().width) || 1440;
       setScene(createLandscape(width));
     };
     const scheduleDraw = () => {
-      window.clearTimeout(timer);
+      if (timer !== undefined) window.clearTimeout(timer);
       timer = window.setTimeout(draw, 150);
     };
 
     draw();
     window.addEventListener('resize', scheduleDraw);
     return () => {
-      window.clearTimeout(timer);
+      if (timer !== undefined) window.clearTimeout(timer);
       window.removeEventListener('resize', scheduleDraw);
     };
   }, []);
@@ -118,7 +150,12 @@ function Landscape() {
   );
 }
 
-export function PageHero({ title, description, children, short = false }) {
+export function PageHero({ title, description, children, short = false }: {
+  title: ReactNode;
+  description: ReactNode;
+  children?: ReactNode;
+  short?: boolean;
+}) {
   return (
     <section className={HERO_CLASSES[short ? 'short' : 'full']}>
       <div className={HERO_CONTENT_CLASSES}>
@@ -131,7 +168,14 @@ export function PageHero({ title, description, children, short = false }) {
   );
 }
 
-export function SectionHeading({ eyebrow, title, description, tone = 'default', spacing = 'normal', centered = false }) {
+export function SectionHeading({ eyebrow, title, description, tone = 'default', spacing = 'normal', centered = false }: {
+  eyebrow?: ReactNode;
+  title: ReactNode;
+  description?: ReactNode;
+  tone?: SectionTone;
+  spacing?: SectionSpacing;
+  centered?: boolean;
+}) {
   return (
     <div className={SECTION_HEADING_CLASSES[spacing] || SECTION_HEADING_CLASSES.normal}>
       {eyebrow && <p className="mb-4 text-[0.85rem] font-bold uppercase tracking-[0.12em] text-sea-ink">{eyebrow}</p>}
@@ -141,15 +185,20 @@ export function SectionHeading({ eyebrow, title, description, tone = 'default', 
   );
 }
 
-export function ActionLink({ to, href, variant = 'accent', children, navLink = false, ...props }) {
-  const className = BUTTON_VARIANTS[variant] || BUTTON_VARIANTS.accent;
-  if (!to) return <a className={className} href={href} {...props}>{children}</a>;
+export function ActionLink(props: ActionLinkProps) {
+  const className = BUTTON_VARIANTS[props.variant ?? 'accent'];
+  if (props.to !== undefined) {
+    const { to, children, variant: _variant, ...linkProps } = props;
+    return <Link className={className} href={to} {...linkProps}>{children}</Link>;
+  }
 
-  const RouterLink = navLink ? NavLink : Link;
-  return <RouterLink className={className} to={to} {...props}>{children}</RouterLink>;
+  const { href, children, variant: _variant, ...anchorProps } = props;
+  return <a className={className} href={href} {...anchorProps}>{children}</a>;
 }
 
-export function MinistryGrid({ ministries }) {
+export function MinistryGrid({ ministries }: {
+  ministries: readonly { name: string; description: string }[];
+}) {
   return (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4">
       {ministries.map(({ name, description }, index) => (
@@ -162,10 +211,11 @@ export function MinistryGrid({ ministries }) {
   );
 }
 
-export function LinkCardGrid({ items }) {
+export function LinkCardGrid({ items }: { items: readonly LinkCardItem[] }) {
   return (
     <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-[1.2rem]">
-      {items.map(({ eyebrow, title, description, label, to, href }, index) => {
+      {items.map((item, index) => {
+        const { eyebrow, title, description, label } = item;
         const content = (
           <>
             <div>
@@ -178,17 +228,19 @@ export function LinkCardGrid({ items }) {
         );
         const className = LINK_CARD_CLASSES[index < LINK_CARD_CLASSES.length ? index : 0];
 
-        return to ? (
-          <Link className={className} to={to} key={title}>{content}</Link>
-        ) : (
-          <a className={className} href={href} target="_blank" rel="noreferrer" key={title}>{content}</a>
-        );
+        if (item.to !== undefined) {
+          return <Link className={className} href={item.to} key={title}>{content}</Link>;
+        }
+
+        return <a className={className} href={item.href} target="_blank" rel="noreferrer" key={title}>{content}</a>;
       })}
     </div>
   );
 }
 
-export function ServiceSchedule({ services }) {
+export function ServiceSchedule({ services }: {
+  services: readonly { time: string; name: string }[];
+}) {
   return (
     <ul className="m-0 grid list-none gap-[0.6rem] p-0">
       {services.map(({ time, name }) => (
@@ -201,7 +253,7 @@ export function ServiceSchedule({ services }) {
   );
 }
 
-export function ContactLinks({ light = false }) {
+export function ContactLinks({ light = false }: { light?: boolean }) {
   return (
     <div className="mt-[1.4rem] grid justify-items-start gap-[0.2rem] font-medium">
       <a className={light ? 'text-highlight no-underline hover:underline' : 'text-secondary-ink no-underline hover:underline'} href="mailto:pastorjordan@encounterministries.org">pastorjordan@encounterministries.org</a>
@@ -210,7 +262,7 @@ export function ContactLinks({ light = false }) {
   );
 }
 
-export function VisitSection({ compact = false }) {
+export function VisitSection({ compact = false }: { compact?: boolean }) {
   return (
     <section className="relative bg-brand py-[5.5rem] text-paper max-[820px]:py-[3.5rem]" id="visit">
       <div className={CONTAINER_CLASSES}>

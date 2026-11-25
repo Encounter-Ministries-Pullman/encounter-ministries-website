@@ -8,12 +8,10 @@
     "strict": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "types": ["vite/client"]
+    "types": ["node"]
   },
   "files": [
-    "src/vite-env.d.ts",
     "src/components/CloudImage.tsx",
-    "src/mediaApi.ts",
-    "src/hooks/useMediaCollection.ts"
+    "src/mediaApi.ts"
   ]
 }

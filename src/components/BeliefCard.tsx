@@ -1,11 +1,17 @@
 const BORDER_COLORS = ["sea", "brand", "highlight"];
 
-function cycleBorderColors(index) {
+export interface Belief {
+    name: string;
+    description: string;
+    scriptures?: string;
+}
+
+function cycleBorderColors(index: number): string {
     const classname = `min-h-[150px] rounded border-t-4 border-${BORDER_COLORS[index % BORDER_COLORS.length]} bg-paper p-6`;
     return classname;
 }
 
-export function BeliefCard({ name, description, scriptures, index = 0 }) {
+export function BeliefCard({ name, description, scriptures, index = 0 }: Belief & { index?: number }) {
     return (
         <article className={cycleBorderColors(index)}>
             <h3 className="mb-[0.4rem] font-display text-xl font-semibold">{name}</h3>

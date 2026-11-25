@@ -1,4 +1,6 @@
-import { useState } from 'react';
+'use client';
+
+import type { ChangeEvent, FormEvent } from 'react';
 import { BUTTON_VARIANTS } from '../constants';
 import { FORM_ERROR_CLASSES, FORM_ERROR_MESSAGE } from '../constants/forms';
 import { useForm } from '@formspree/react';
@@ -21,10 +23,10 @@ export function PrayerForm() {
   return (
     <form className="grid gap-4" onSubmit={submitToFormspree}>
       {state.succeeded && <DeliveryNotice />}
-      {state.errors?.length > 0 && <p className={FORM_ERROR_CLASSES} role="alert">{FORM_ERROR_MESSAGE}</p>}
+      {(state.errors?.getFormErrors().length ?? 0) > 0 && <p className={FORM_ERROR_CLASSES} role="alert">{FORM_ERROR_MESSAGE}</p>}
       <label className={FORM_LABEL_CLASSES}>Name (optional)<input className={FORM_FIELD_CLASSES} name="name" autoComplete="name" /></label>
       <label className={FORM_LABEL_CLASSES}>Email (optional)<input className={FORM_FIELD_CLASSES} type="email" name="email" autoComplete="email" /></label>
-      <label className={FORM_LABEL_CLASSES}>Your request<textarea className={FORM_TEXTAREA_CLASSES} name="request" rows="4" required /></label>
+      <label className={FORM_LABEL_CLASSES}>Your request<textarea className={FORM_TEXTAREA_CLASSES} name="request" rows={4} required /></label>
       <label className="flex items-center gap-[0.6rem] font-medium"><input className="accent-sea" type="checkbox" name="private" value="yes" defaultChecked /> Keep this private to the prayer team</label>
       <button className={`${BUTTON_VARIANTS.solid} justify-self-start`} type="submit">Send prayer request</button>
     </form>
@@ -39,10 +41,11 @@ const interestOptions = [
 export function ConnectForm() {
   const [state, submitToFormspree] = useForm('mqppypab');
 
-  function handleConnectSubmit(event) {
+  function handleConnectSubmit(event: FormEvent<HTMLFormElement>) {
     const form = event.currentTarget;
     const email = form.elements.namedItem('email');
     const phone = form.elements.namedItem('phone');
+    if (!(email instanceof HTMLInputElement) || !(phone instanceof HTMLInputElement)) return;
     const missingContact = !email.value.trim() && !phone.value.trim();
     
     email.setCustomValidity(
@@ -57,16 +60,18 @@ export function ConnectForm() {
     submitToFormspree(event);
   }
 
-  function clearContactValidity(event) {
+  function clearContactValidity(event: ChangeEvent<HTMLFormElement>) {
     const form = event.currentTarget;
-    form.elements.namedItem('email').setCustomValidity('');
-    form.elements.namedItem('phone').setCustomValidity('');
+    const email = form.elements.namedItem('email');
+    const phone = form.elements.namedItem('phone');
+    if (email instanceof HTMLInputElement) email.setCustomValidity('');
+    if (phone instanceof HTMLInputElement) phone.setCustomValidity('');
   }
 
   return (
     <form className="grid gap-4" onSubmit={handleConnectSubmit} onChange={clearContactValidity}>
       {state.succeeded && <DeliveryNotice />}
-      {state.errors?.length > 0 && <p className={FORM_ERROR_CLASSES} role="alert">{FORM_ERROR_MESSAGE}</p>}
+      {(state.errors?.getFormErrors().length ?? 0) > 0 && <p className={FORM_ERROR_CLASSES} role="alert">{FORM_ERROR_MESSAGE}</p>}
       <label className={FORM_LABEL_CLASSES}>Name<input className={FORM_FIELD_CLASSES} name="name" required autoComplete="name" /></label>
       <div className="grid grid-cols-2 gap-4 max-[520px]:grid-cols-1">
         <label className={FORM_LABEL_CLASSES}>Email<input className={FORM_FIELD_CLASSES} type="email" name="email" autoComplete="email" /></label>
@@ -80,7 +85,7 @@ export function ConnectForm() {
           ))}
         </div>
       </fieldset>
-      <label className={FORM_LABEL_CLASSES}>Anything else you'd like us to know? (optional)<textarea className={FORM_TEXTAREA_CLASSES} name="message" rows="4" /></label>
+      <label className={FORM_LABEL_CLASSES}>Anything else you'd like us to know? (optional)<textarea className={FORM_TEXTAREA_CLASSES} name="message" rows={4} /></label>
       <button className={`${BUTTON_VARIANTS.solid} justify-self-start`} type="submit" disabled={state.submitting}>{state.submitting ? 'Sending...' : 'Send'}</button>
     </form>
   );

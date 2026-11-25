@@ -1,5 +1,6 @@
 export const MEDIA_COLLECTIONS = ['worship', 'leadership'] as const;
 export type MediaCollection = typeof MEDIA_COLLECTIONS[number];
+export type MediaCollectionStatus = 'ready' | 'error';
 
 export const MEDIA_COLLECTION_PREFIXES: Record<MediaCollection, string> = {
   worship: 'encounter-ministries-photos/worship/',

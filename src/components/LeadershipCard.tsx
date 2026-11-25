@@ -1,12 +1,32 @@
 import { CloudImage } from './CloudImage';
 
-function getContactHref({ type, value }) {
+import type { CloudImageAsset } from './CloudImage';
+
+export interface LeaderContact {
+  type: 'email' | 'phone' | 'website';
+  label: string;
+  value: string;
+}
+
+export interface Leader {
+  name: string;
+  role?: string;
+  description?: string;
+  imageAlt?: string;
+  contacts?: readonly LeaderContact[];
+}
+
+function getContactHref({ type, value }: Pick<LeaderContact, 'type' | 'value'>): string {
   if (type === 'email') return `mailto:${value}`;
   if (type === 'phone') return `tel:${value}`;
   return value;
 }
 
-export function LeadershipCard({ leader, image, imageStatus }) {
+export function LeadershipCard({ leader, image, imageStatus }: {
+  leader: Leader;
+  image?: CloudImageAsset;
+  imageStatus: 'loading' | 'ready' | 'error';
+}) {
   const { name, role, description, imageAlt, contacts = [] } = leader;
 
   return (

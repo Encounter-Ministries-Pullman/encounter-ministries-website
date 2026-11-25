@@ -1,17 +1,18 @@
+import 'server-only';
+
 import type { CloudImageAsset } from './components/CloudImage';
 import { IMAGE_SUFFIXES, MEDIA_COLLECTION_PREFIXES, type MediaCollection } from './constants/media';
 
 export type { MediaCollection } from './constants/media';
 
 function getApiOrigin(): string {
-  const configuredOrigin = import.meta.env.VITE_MEDIA_API_ORIGIN?.trim();
-  const origin = configuredOrigin || (import.meta.env.DEV ? 'http://localhost:8000' : '');
+  const configuredOrigin = process.env.MEDIA_API_ORIGIN?.trim();
 
-  if (!origin) {
-    throw new Error('VITE_MEDIA_API_ORIGIN must be set for production builds.');
+  if (!configuredOrigin) {
+    throw new Error('MEDIA_API_ORIGIN must be configured for the Next.js server.');
   }
 
-  return origin.replace(/\/+$/, '');
+  return configuredOrigin.replace(/\/+$/, '');
 }
 
 function isCollectionResponse(value: unknown, collection: MediaCollection): value is {
@@ -28,11 +29,10 @@ function isCollectionResponse(value: unknown, collection: MediaCollection): valu
 
 export async function fetchMediaCollection(
   collection: MediaCollection,
-  signal?: AbortSignal,
 ): Promise<CloudImageAsset[]> {
   const response = await fetch(`${getApiOrigin()}/api/media/${collection}`, {
     headers: { Accept: 'application/json' },
-    signal,
+    cache: 'no-store',
   });
 
   if (!response.ok) {

@@ -18,6 +18,11 @@
 }
 
 :root {
+  --color-primary: #234048;
+  --color-secondary: #2E848A;
+  --color-background: #f4f2f0;
+  --color-text: #FFFBF4;
+  --color-contrast: #f3b740;
   font-family: "Inter", sans-serif;
   color: var(--color-primary);
   background: var(--color-background);

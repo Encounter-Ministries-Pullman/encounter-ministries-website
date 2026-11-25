@@ -1,11 +1,7 @@
 import React from 'react';
 
 const IMAGE_WIDTHS = [400, 800, 1200, 1600, 2400] as const;
-const MEDIA_ORIGIN = import.meta.env.VITE_MEDIA_ORIGIN?.replace(/\/+$/, '');
-
-if (!MEDIA_ORIGIN) {
-  throw new Error('VITE_MEDIA_ORIGIN must be configured.');
-}
+const MEDIA_ORIGIN = process.env.NEXT_PUBLIC_MEDIA_ORIGIN?.replace(/\/+$/, '');
 
 export interface CloudImageAsset {
   objectKey: string;
@@ -22,6 +18,10 @@ interface CloudImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>
 }
 
 function getCdnUrl(objectKey: string, width: number): string {
+  if (!MEDIA_ORIGIN) {
+    throw new Error('NEXT_PUBLIC_MEDIA_ORIGIN must be configured.');
+  }
+
   const segments = objectKey.split('/');
   if (segments.some((segment) => !segment || segment === '.' || segment === '..')) {
     throw new Error(`Invalid CDN object key: ${objectKey}`);

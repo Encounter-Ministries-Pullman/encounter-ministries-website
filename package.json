@@ -4,24 +4,26 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "typecheck": "tsc --noEmit",
     "typecheck:images": "tsc --noEmit -p tsconfig.typecheck.json"
   },
   "dependencies": {
     "@formspree/react": "^3.0.0",
     "@tailwindcss/postcss": "^4.3.3",
-    "@tailwindcss/vite": "^4.3.3",
-    "@vitejs/plugin-react": "latest",
     "lucide-react": "^1.66.0",
+    "next": "^16.4.6",
     "react": "latest",
     "react-dom": "latest",
-    "react-router-dom": "latest",
-    "tailwindcss": "^4.3.3",
-    "vite": "latest"
+    "server-only": "^0.0.1",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
+    "@types/node": "26.6.7",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "typescript": "latest"
